@@ -4,7 +4,7 @@ import groovy.json.JsonSlurper
 
 // artifactsNames   = ['cloudhub-ui', 'mozart-ui', 'anypoint-navbar', 'anypoint-icons', 'anypoint-styles', 'analytics-kpi-web', 'marketing-assets']
 artifactEnvs    = ['stgx']
-releaseEnvs     = ['prod']
+releaseEnvs     = ['stgx', 'prod']
 
 supportedEnvs   = artifactEnvs + releaseEnvs
 
