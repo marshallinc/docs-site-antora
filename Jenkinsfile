@@ -49,7 +49,7 @@ pipeline {
               bucket: 'mulesoft-dev-docs-qax',
               selectedRegion: 'us-east-1',
               storageClass: 'STANDARD',
-              sourceFile: 'publish/**',
+              sourceFile: 'build/site/**',
               excludedFile: '',
               flatten: false,
               gzipFiles: false,
