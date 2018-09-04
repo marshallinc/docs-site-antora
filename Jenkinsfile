@@ -1,12 +1,10 @@
 pipeline {
-  //agent {
-  //  label 'lxc-fedora25'
-  //}
+  agent any
   stages {
     stage('Clone') {
       steps {
         git url: 'git@github.com:mulesoft/docs-site-antora',
-            branch: 'pipeline',
+            branch: 'master',
             credentialsId: 'mule-docs-agent-ssh-key',
             changelog: false,
             poll: false
