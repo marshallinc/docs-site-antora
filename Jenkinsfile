@@ -72,7 +72,7 @@ pipeline {
     //  steps {
     //    // requires CloudBees AWS CLI plugin
     //    withAwsCli(credentialsId: 'testing-aws', defaultRegion: 'us-east-1') {
-    //      sh 'aws --output text cloudfront create-invalidation --distribution-id EZ24EZJWM93W9 --paths "/*"'
+    //      sh 'aws --output text cloudfront create-invalidation --distribution-id E2EXZ06TFQNQ5B --paths "/*"'
     //    }
     //  }
     //}
