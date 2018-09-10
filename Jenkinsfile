@@ -25,7 +25,8 @@ pipeline {
           node_modules: {
             nodejs('node8') {
               // BUILD_ONLY is required on Fedora to force nodegit to recompile
-              sh 'BUILD_ONLY=true yarn'
+              //sh 'BUILD_ONLY=true yarn'
+              sh 'yarn'
             }
           }
         )
