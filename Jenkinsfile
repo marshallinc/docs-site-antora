@@ -27,8 +27,7 @@ pipeline {
               // BUILD_ONLY is required on Fedora to force nodegit to recompile
               //sh 'BUILD_ONLY=true yarn'
               //sh 'yarn'
-              //sh 'echo yarn'
-              sh 'aws --version'
+              sh 'echo yarn'
             }
           }
         )
