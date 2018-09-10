@@ -70,7 +70,8 @@ pipeline {
     }
     stage('Invalidate Cache') {
       steps {
-        withCredentials([usernamePassword(credentialsId: 'dev-docs-jenkins-qax', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {
+        withCredentials([[ $class: 'UsernamePasswordMultiBinding', credentialsId: 'dev-docs-jenkins-qax', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY' ]]) {
+        //withCredentials([usernamePassword(credentialsId: 'dev-docs-jenkins-qax', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {
           //sh 'aws --output text cloudfront create-invalidation --distribution-id E2EXZ06TFQNQ5B --paths "/*"'
           sh 'aws sts get-caller-identity'
         }
