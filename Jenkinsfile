@@ -71,8 +71,8 @@ pipeline {
     stage('Invalidate Cache') {
       steps {
         withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'dev-docs-jenkins-qax', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
-          //sh 'aws --output text cloudfront create-invalidation --distribution-id E2EXZ06TFQNQ5B --paths "/*"'
-          sh 'aws sts get-caller-identity'
+          sh 'aws --output text cloudfront create-invalidation --distribution-id E2EXZ06TFQNQ5B --paths "/*"'
+          //sh 'aws sts get-caller-identity'
         }
       }
     }
