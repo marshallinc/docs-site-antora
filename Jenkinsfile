@@ -68,14 +68,14 @@ pipeline {
             userMetadata: []
       }
     }
-    //stage('Invalidate Cache') {
-    //  steps {
-    //    // requires CloudBees AWS CLI plugin
-    //    withAwsCli(credentialsId: 'testing-aws', defaultRegion: 'us-east-1') {
-    //      sh 'aws --output text cloudfront create-invalidation --distribution-id E2EXZ06TFQNQ5B --paths "/*"'
-    //    }
-    //  }
-    //}
+    stage('Invalidate Cache') {
+      steps {
+        withCredentials([usernamePassword(credentialsId: 'dev-docs-jenkins-qax', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {
+          //sh 'aws --output text cloudfront create-invalidation --distribution-id E2EXZ06TFQNQ5B --paths "/*"'
+          sh 'aws sts get-caller-identity'
+        }
+      }
+    }
   }
   post { 
     always { 
