@@ -37,6 +37,7 @@ pipeline {
     stage('Build') {
       environment {
         LD_LIBRARY_PATH='usr/lib/x86_64-linux-gnu'
+        NODE_OPTIONS='--max-old-space-size=4096'
       }
       steps {
         sshagent(['mule-docs-agent-ssh-key']) {
