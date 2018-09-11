@@ -24,25 +24,23 @@ pipeline {
           },
           node_modules: {
             nodejs('node8') {
-              // BUILD_ONLY is required on Fedora to force nodegit to recompile
               //sh 'BUILD_ONLY=true yarn'
-              //sh 'yarn'
-              //sh 'echo yarn'
-              //sh 'lsb_release -a'
-              sh 'yarn --force --no-lockfile'
+              sh 'yarn'
             }
           }
         )
       }
     }
     stage('Build') {
+      environment {
+        LD_LIBRARY_PATH='usr/lib/x86_64-linux-gnu'
+      }
       steps {
         sshagent(['mule-docs-agent-ssh-key']) {
           nodejs('node8') {
-            sh 'find /usr/ -name "libstdc*"'
-            //sh '$(npm bin)/antora --clean --pull --stacktrace antora-production-playbook.yml'
-            //sh 'mkdir -p build/site'
-            //sh 'echo hello > build/site/hello.html'
+            sh 'curl -sO http://ppa.launchpad.net/ubuntu-toolchain-r/test/ubuntu/pool/main/g/gcc-8/libstdc++6_8.1.0-5ubuntu1~14.04_amd64.deb'
+            sh 'ar p libstdc++6_8.1.0-5ubuntu1~14.04_amd64.deb data.tar.xz | tar xJ'
+            sh '$(npm bin)/antora --clean --pull --stacktrace antora-production-playbook.yml'
           }
         }
       }
