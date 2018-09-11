@@ -16,6 +16,7 @@ pipeline {
           ui: {
             withCredentials([string(credentialsId: 'mule-docs-agent-github-token', variable: 'GITHUB_TOKEN')]) {
               sh './download-ui-bundle.sh'
+              sh 'file build/ui-bundle.zip'
             }
           },
           node_modules: {
