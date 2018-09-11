@@ -39,7 +39,7 @@ pipeline {
       steps {
         sshagent(['mule-docs-agent-ssh-key']) {
           nodejs('node8') {
-            sh 'locate "libstdc++.so.6"'
+            sh 'find /usr/ -name "libstdc*"'
             //sh '$(npm bin)/antora --clean --pull --stacktrace antora-production-playbook.yml'
             //sh 'mkdir -p build/site'
             //sh 'echo hello > build/site/hello.html'
