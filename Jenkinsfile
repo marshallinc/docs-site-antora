@@ -53,26 +53,6 @@ pipeline {
         withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'dev-docs-jenkins-qax', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
           sh 'aws s3 cp build/site/ s3://mulesoft-dev-docs-qax/ --recursive --only-show-errors --acl=public-read'
         }
-        //s3Upload profileName: 'dev-docs-jenkins-qax',
-        //    entries: [[
-        //      bucket: 'mulesoft-dev-docs-qax',
-        //      selectedRegion: 'us-east-1',
-        //      storageClass: 'STANDARD',
-        //      sourceFile: 'build/site/**',
-        //      excludedFile: '',
-        //      flatten: false,
-        //      gzipFiles: false,
-        //      keepForever: true,
-        //      managedArtifacts: false,
-        //      noUploadOnFailure: true,
-        //      showDirectlyInBrowser: false,
-        //      uploadFromSlave: true,
-        //      useServerSideEncryption: false
-        //    ]],
-        //    dontWaitForConcurrentBuildCompletion: false,
-        //    consoleLogLevel: 'WARNING',
-        //    pluginFailureResultConstraint: 'FAILURE',
-        //    userMetadata: []
       }
     }
     stage('Invalidate Cache') {
