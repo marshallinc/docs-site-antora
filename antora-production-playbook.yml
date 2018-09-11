@@ -34,8 +34,6 @@ content:
       branches: [v3.1, v3.0, v2.0]     
     - url: git@github.com:mulesoft/docs-monitoring
       branches: [master]
-    - url: git@github.com:mulesoft/docs-monitoring
-      branches: [master]
     - url: git@github.com:mulesoft/docs-mq
       branches: [master]
     - url: git@github.com:mulesoft/docs-mule-runtime
