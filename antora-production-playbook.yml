@@ -43,6 +43,7 @@ content:
     - url: git@github.com:mulesoft/docs-mule4-runtime
       branches: [v4.1]
     - url: git@github.com:mulesoft/docs-mule-management-console
+      branches: [v3.8]
     - url: git@github.com:mulesoft/docs-mule-sdk
       branches: [v1.1, v1.0]
     - url: git@github.com:mulesoft/docs-munit
