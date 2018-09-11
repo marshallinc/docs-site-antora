@@ -21,6 +21,6 @@ content:
       branches: [v7.2, v7.1, v6.5]
 ui:
   bundle:
-    url: ./build/ui-bundle.zip
-    #url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/master/raw/build/ui-bundle.zip?job=bundle-stable
-    #snapshot: true
+    #url: ./build/ui-bundle.zip
+    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/master/raw/build/ui-bundle.zip?job=bundle-stable
+    snapshot: true
