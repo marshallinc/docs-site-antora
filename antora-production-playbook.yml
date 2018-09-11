@@ -10,7 +10,7 @@ content:
       branches: [master]
     - url: git@github.com:mulesoft/docs-anypoint-platform-pcf
       branches: [v1.7, v1.6]
-    - url: git@github.com:mulesoft/docs-api-kit
+    - url: git@github.com:mulesoft/docs-apikit
       branches: [v4.x, v3.x]
     - url: git@github.com:mulesoft/docs-api-manager
       branches: [v2.x, v1.x]
