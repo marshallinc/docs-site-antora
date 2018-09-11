@@ -2,23 +2,45 @@ runtime:
   cache_dir: ./.cache/antora
 site:
   title: MuleSoft Documentation
-  url: https://docs-new.stgx.mulesoft.com
+  url: http://mulesoft-dev-docs-qax.s3-website-us-east-1.amazonaws.com/
   start_page: general::index.adoc
 content:
   sources:
     - url: git@github.com:mulesoft/docs-access-management
-    #- url: git@github.com:mulesoft/docs-mule-sdk
-    #  branches: [v1.1, v1.0]
+    - url: git@github.com:mulesoft/docs-anypoint-platform-pcf
+    - url: git@github.com:mulesoft/docs-api-kit
+    - url: git@github.com:mulesoft/docs-api-manager
+    - url: git@github.com:mulesoft/docs-connector-devkit
+      branches: [v3.9, v3.8, v3.7, v3.6, v3.5]
+    - url: git@github.com:mulesoft/docs-connectors      
+    - url: git@github.com:mulesoft/docs-data-gateway      
+    - url: git@github.com:mulesoft/docs-design-center
+    - url: git@github.com:mulesoft/docs-eu-cloud
+    - url: git@github.com:mulesoft/docs-exchange
+    - url: git@github.com:mulesoft/docs-functional-monitoring
     - url: git@github.com:mulesoft/docs-general
+    - url: git@github.com:mulesoft/docs-healthcare-toolkit
+    - url: git@github.com:mulesoft/docs-monitoring
+    - url: git@github.com:mulesoft/docs-monitoring
+    - url: git@github.com:mulesoft/docs-mq
+    - url: git@github.com:mulesoft/docs-mule4-runtime
+    - url: git@github.com:mulesoft/docs-mule-management-console
+    - url: git@github.com:mulesoft/docs-mule-sdk
+      branches: [v1.1, v1.0]
     - url: git@github.com:mulesoft/docs-munit
       branches: [v2.1, v2.0, v1.3]
-    #- url: git@github.com:mulesoft/docs-object-store
-    #- url: git@github.com:mulesoft/docs-partner-manager
+    - url: git@github.com:mulesoft/docs-object-store
+    - url: git@github.com:mulesoft/docs-partner-manager
     - url: git@github.com:mulesoft/docs-private-cloud
-    #- url: git@github.com:mulesoft/docs-release-notes
-    #- url: git@github.com:mulesoft/docs-runtime-manager
+    - url: git@github.com:mulesoft/docs-runtime-manager
+    - url: git@github.com:mulesoft/docs-runtime-fabric
+    - url: git@github.com:mulesoft/docs-runtime
+    - url: git@github.com:mulesoft/docs-release-notes
     - url: git@github.com:mulesoft/docs-studio
       branches: [v7.2, v7.1, v6.5]
+    - url: git@github.com:mulesoft/docs-tcat-server
+    - url: git@github.com:mulesoft/docs-visualizer
+
 ui:
   bundle:
     url: ./build/ui-bundle.zip
