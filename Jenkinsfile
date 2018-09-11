@@ -1,8 +1,8 @@
 pipeline {
-  //agent any
-  agent {
-    label 'dev-docs-slave'
-  }
+  agent any
+  //agent {
+  //  label 'dev-docs-slave'
+  //}
   stages {
     stage('Clone') {
       steps {
@@ -30,17 +30,17 @@ pipeline {
               sh 'yarn'
             }
           },
-          //libs: {
-          //  sh 'curl -sO http://ppa.launchpad.net/ubuntu-toolchain-r/test/ubuntu/pool/main/g/gcc-8/libstdc++6_8.1.0-5ubuntu1~14.04_amd64.deb'
-          //  sh 'ar p libstdc++6_8.1.0-5ubuntu1~14.04_amd64.deb data.tar.xz | tar xJ'
-          //}
+          libs: {
+            sh 'curl -sO http://ppa.launchpad.net/ubuntu-toolchain-r/test/ubuntu/pool/main/g/gcc-8/libstdc++6_8.1.0-5ubuntu1~14.04_amd64.deb'
+            sh 'ar p libstdc++6_8.1.0-5ubuntu1~14.04_amd64.deb data.tar.xz | tar xJ'
+          }
         )
       }
     }
     stage('Build') {
       environment {
-        //LD_LIBRARY_PATH='usr/lib/x86_64-linux-gnu'
-        NODE_OPTIONS='--max-old-space-size=4096'
+        LD_LIBRARY_PATH='usr/lib/x86_64-linux-gnu'
+        NODE_OPTIONS='--max-old-space-size=2048'
       }
       steps {
         sshagent(['mule-docs-agent-ssh-key']) {
