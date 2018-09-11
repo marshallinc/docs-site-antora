@@ -17,7 +17,7 @@ pipeline {
             withCredentials([string(credentialsId: 'mule-docs-agent-github-token', variable: 'GITHUB_TOKEN')]) {
               sh '''
                 curl -s -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/mulesoft/docs-site-antora-ui/releases \
-                | jq .[0].assets[0].id \
+                | tr '\n' ' ' | grep -oP '"assets":.*?"id":[^,]+' | head -1 | grep -o '[0-9]\+$' \
                 | curl -s -L -o build/ui-bundle.zip --create-dirs -H "Accept: application/octet-stream" https://api.github.com/repos/mulesoft/docs-site-antora-ui/releases/assets/$(cat /dev/stdin)?access_token=$GITHUB_TOKEN
               '''
             }
@@ -72,8 +72,7 @@ pipeline {
     stage('Invalidate Cache') {
       steps {
         withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'dev-docs-jenkins-qax', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
-          sh 'aws --output text cloudfront create-invalidation --distribution-id E2EXZ06TFQNQ5B --paths "/*"'
-          //sh 'aws sts get-caller-identity'
+          //sh 'aws --output text cloudfront create-invalidation --distribution-id E2EXZ06TFQNQ5B --paths "/*"'
         }
       }
     }
