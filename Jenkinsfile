@@ -42,7 +42,8 @@ pipeline {
       steps {
         sshagent(['mule-docs-agent-ssh-key']) {
           nodejs('node8') {
-            sh '$(npm bin)/antora --clean --pull --stacktrace antora-production-playbook.yml'
+            sh '$(npm bin)/antora --clean --pull --stacktrace antora-production-playbook.yml > build/build.log 2>&1'
+            sh 'cat build/build.log'
           }
         }
       }
