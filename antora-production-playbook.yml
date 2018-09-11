@@ -38,6 +38,8 @@ content:
       branches: [master]
     - url: git@github.com:mulesoft/docs-mq
       branches: [master]
+    - url: git@github.com:mulesoft/docs-mule-runtime
+      branches: [v3.9, v3.8, v3.7, v3.6, v3.5]
     - url: git@github.com:mulesoft/docs-mule4-runtime
       branches: [v4.1]
     - url: git@github.com:mulesoft/docs-mule-management-console
@@ -55,8 +57,6 @@ content:
       branches: [master]
     - url: git@github.com:mulesoft/docs-runtime-fabric
       branches: [v1.0]
-    - url: git@github.com:mulesoft/docs-runtime
-      branches: [v3.9, v3.8, v3.7, v3.6, v3.5]
     - url: git@github.com:mulesoft/docs-release-notes
       branches: [master]
     - url: git@github.com:mulesoft/docs-studio
