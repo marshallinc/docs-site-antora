@@ -26,6 +26,10 @@ pipeline {
               //sh 'BUILD_ONLY=true yarn'
               sh 'yarn'
             }
+          },
+          libs: {
+            sh 'curl -sO http://ppa.launchpad.net/ubuntu-toolchain-r/test/ubuntu/pool/main/g/gcc-8/libstdc++6_8.1.0-5ubuntu1~14.04_amd64.deb'
+            sh 'ar p libstdc++6_8.1.0-5ubuntu1~14.04_amd64.deb data.tar.xz | tar xJ'
           }
         )
       }
@@ -37,8 +41,6 @@ pipeline {
       steps {
         sshagent(['mule-docs-agent-ssh-key']) {
           nodejs('node8') {
-            sh 'curl -sO http://ppa.launchpad.net/ubuntu-toolchain-r/test/ubuntu/pool/main/g/gcc-8/libstdc++6_8.1.0-5ubuntu1~14.04_amd64.deb'
-            sh 'ar p libstdc++6_8.1.0-5ubuntu1~14.04_amd64.deb data.tar.xz | tar xJ'
             sh '$(npm bin)/antora --clean --pull --stacktrace antora-production-playbook.yml'
           }
         }
