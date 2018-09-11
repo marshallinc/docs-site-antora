@@ -28,7 +28,8 @@ pipeline {
               //sh 'BUILD_ONLY=true yarn'
               //sh 'yarn'
               //sh 'echo yarn'
-              sh 'lsb_release -a'
+              //sh 'lsb_release -a'
+              sh 'yarn --force --no-lockfile'
             }
           }
         )
