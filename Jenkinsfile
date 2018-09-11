@@ -15,7 +15,8 @@ pipeline {
         parallel(
           ui: {
             withCredentials([string(credentialsId: 'mule-docs-agent-github-token', variable: 'GITHUB_TOKEN')]) {
-              sh './download-ui-bundle.sh'
+              //sh './download-ui-bundle.sh'
+              sh 'curl -s -o build/ui-bundle.zip --create-dirs https://s3.amazonaws.com/mulesoft-dev-docs-qax/bin/ui-bundle.zip'
               sh 'zip -T build/ui-bundle.zip'
             }
           },
