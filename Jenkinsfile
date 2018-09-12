@@ -58,6 +58,7 @@ pipeline {
       steps {
         withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'dev-docs-jenkins-qax', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
           sh 'aws s3 cp build/site/ s3://mulesoft-dev-docs-qax/ --recursive --only-show-errors --acl=public-read'
+          sh 'aws s3 cp etc/nginx/rewrites.conf s3://mulesoft-dev-docs-qax/.rewrites.conf --only-show-errors'
         }
       }
     }
