@@ -7,10 +7,10 @@ def s3Bucket = 'mulesoft-dev-docs-qax'
 def cfDistributionId = 'E2EXZ06TFQNQ5B'
 
 pipeline {
-  agent any
-  //agent {
-  //  label 'dev-docs-slave'
-  //}
+  agent {
+    //label 'dev-docs-slave'
+    label 'ubuntu-14.04'
+  }
   stages {
     stage('Clone') {
       steps {
