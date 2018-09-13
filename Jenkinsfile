@@ -1,3 +1,11 @@
+def gitUrl = 'git@github.com:mulesoft/docs-site-antora'
+def gitBranch = 'master'
+def gitCredentialsId = 'mule-docs-agent-ssh-key'
+def githubTokenCredentialsId = 'mule-docs-agent-github-token'
+def awsCredentialsId = 'dev-docs-jenkins-qax'
+def s3Bucket = 'mulesoft-dev-docs-qax'
+def cfDistributionId = 'E2EXZ06TFQNQ5B'
+
 pipeline {
   agent any
   //agent {
@@ -6,9 +14,16 @@ pipeline {
   stages {
     stage('Clone') {
       steps {
-        git url: 'git@github.com:mulesoft/docs-site-antora',
-            branch: 'master',
-            credentialsId: 'mule-docs-agent-ssh-key',
+        checkout scm:
+            [
+              $class: 'GitSCM',
+              userRemoteConfigs: [[credentialsId: gitCredentialsId, url: gitUrl]],
+              branches: [[name: "refs/heads/${gitBranch}"]],
+              extensions: [
+                [$class: 'CloneOption', honorRefspec: true, noTags: true, shallow: true],
+                [$class: 'MessageExclusion', excludedMessage: '(?s).*\\[skip .+?\\].*']
+              ]
+            ],
             changelog: false,
             poll: false
       }
@@ -17,9 +32,9 @@ pipeline {
       steps {
         parallel(
           ui: {
-            withCredentials([string(credentialsId: 'mule-docs-agent-github-token', variable: 'GITHUB_TOKEN')]) {
+            withCredentials([string(credentialsId: githubTokenCredentialsId, variable: 'GITHUB_TOKEN')]) {
               //sh './download-ui-bundle.sh'
-              sh 'curl -s -o build/ui-bundle.zip --create-dirs https://s3.amazonaws.com/mulesoft-dev-docs-qax/bin/ui-bundle.zip'
+              sh "curl -s -o build/ui-bundle.zip --create-dirs https://s3.amazonaws.com/${s3Bucket}/bin/ui-bundle.zip"
               //sh 'zip -T build/ui-bundle.zip'
               sh 'file -i build/ui-bundle.zip'
             }
@@ -58,16 +73,16 @@ pipeline {
     }
     stage('Publish') {
       steps {
-        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'dev-docs-jenkins-qax', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
-          sh 'aws s3 cp build/site/ s3://mulesoft-dev-docs-qax/ --recursive --only-show-errors --acl=public-read'
-          sh 'aws s3 cp etc/nginx/rewrites.conf s3://mulesoft-dev-docs-qax/.rewrites.conf --only-show-errors'
+        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: awsCredentialsId, accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+          sh "aws s3 cp build/site/ s3://${s3Bucket}/ --recursive --only-show-errors --acl=public-read"
+          sh "aws s3 cp etc/nginx/rewrites.conf s3://${s3Bucket}/.rewrites.conf --only-show-errors"
         }
       }
     }
     stage('Invalidate Cache') {
       steps {
-        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'dev-docs-jenkins-qax', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
-          sh 'aws --output text cloudfront create-invalidation --distribution-id E2EXZ06TFQNQ5B --paths "/*"'
+        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: awsCredentialsId, accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+          sh "aws --output text cloudfront create-invalidation --distribution-id ${cfDistributionId} --paths '/*'"
         }
       }
     }
