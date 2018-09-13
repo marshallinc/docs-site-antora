@@ -1,7 +1,7 @@
 def gitUrl = 'git@github.com:mulesoft/docs-site-antora'
 def gitBranch = 'master'
 def gitCredentialsId = 'mule-docs-agent-ssh-key'
-def githubTokenCredentialsId = 'mule-docs-agent-github-token'
+def githubCredentialsId = 'mule-docs-agent-github-token'
 def awsCredentialsId = 'dev-docs-jenkins-qax'
 def s3Bucket = 'mulesoft-dev-docs-qax'
 def cfDistributionId = 'E2EXZ06TFQNQ5B'
@@ -20,7 +20,7 @@ pipeline {
               userRemoteConfigs: [[credentialsId: gitCredentialsId, url: gitUrl]],
               branches: [[name: "refs/heads/${gitBranch}"]],
               extensions: [
-                [$class: 'CloneOption', honorRefspec: true, noTags: true, shallow: true],
+                [$class: 'CloneOption', depth: 1, honorRefspec: true, noTags: true, shallow: true],
                 [$class: 'MessageExclusion', excludedMessage: '(?s).*\\[skip .+?\\].*']
               ]
             ],
@@ -32,16 +32,15 @@ pipeline {
       steps {
         parallel(
           ui: {
-            withCredentials([string(credentialsId: githubTokenCredentialsId, variable: 'GITHUB_TOKEN')]) {
-              //sh './download-ui-bundle.sh'
-              sh "curl -s -o build/ui-bundle.zip --create-dirs https://s3.amazonaws.com/${s3Bucket}/bin/ui-bundle.zip"
-              //sh 'zip -T build/ui-bundle.zip'
+            withCredentials([string(credentialsId: githubCredentialsId, variable: 'GITHUB_TOKEN')]) {
+              nodejs('node8') {
+                sh './download-ui-bundle.sh'
+              }
               sh 'file -i build/ui-bundle.zip'
             }
           },
           node_modules: {
             nodejs('node8') {
-              //sh 'BUILD_ONLY=true yarn'
               sh 'yarn'
             }
           },
