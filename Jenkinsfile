@@ -23,6 +23,9 @@ pipeline {
             changelog: false,
             poll: false
         script {
+          echo env.GIT_BRANCH
+          sh 'git log -1 --pretty=tformat:%s'
+          sh 'git rev-parse --abbrev-ref HEAD'
           if (sh(script: 'git log -1 --pretty=tformat:%s | grep -qP "\\[skip .+?\\]"', returnStatus: true) == 0) {
             env.SKIP_CI = 'true'
           }
