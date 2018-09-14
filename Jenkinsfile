@@ -81,7 +81,7 @@ pipeline {
       steps {
         withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: awsCredentialsId, accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
           sh "aws s3 cp build/site/ s3://${s3Bucket}/ --recursive --only-show-errors --acl=public-read"
-          sh "aws s3 cp etc/nginx/rewrites.conf s3://${s3Bucket}/.rewrites.conf --only-show-errors"
+          sh "aws s3 cp etc/nginx/includes/rewrites.conf s3://${s3Bucket}/.rewrites.conf --only-show-errors"
         }
       }
     }
