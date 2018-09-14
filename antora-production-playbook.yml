@@ -51,7 +51,7 @@ content:
   - url: git@github.com:mulesoft/docs-partner-manager
     branches: master
   - url: git@github.com:mulesoft/docs-private-cloud
-    branches: v2.0, v1.7, v1.6, v1.5
+    branches: v2.0, v1.7, v1.6, v1.5, v1.1
   - url: git@github.com:mulesoft/docs-runtime-manager
     branches: master
   - url: git@github.com:mulesoft/docs-runtime-fabric
