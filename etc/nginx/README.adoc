@@ -82,7 +82,7 @@ The provided configuration covers the following scenarios, listed in the order i
 |200
 
 |/anypoint-studio/v/6
-|/studio/6
+|/studio/6/
 |301
 
 |/anypoint-studio/v/6/
@@ -105,10 +105,9 @@ The provided configuration covers the following scenarios, listed in the order i
 |/studio/6/
 |302
 
-// QUESTION which rule does this??
 |/studio/6
 |/studio/6/
-|302
+|S3 302
 
 |/studio/6/
 |/studio/6/index.html
