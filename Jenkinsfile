@@ -23,9 +23,6 @@ pipeline {
             changelog: false,
             poll: false
         script {
-          echo env.GIT_BRANCH
-          sh 'git log -1 --pretty=tformat:%s'
-          sh 'git rev-parse --abbrev-ref HEAD'
           if (sh(script: 'git log -1 --pretty=tformat:%s | grep -qP "\\[skip .+?\\]"', returnStatus: true) == 0) {
             env.SKIP_CI = 'true'
           }
@@ -33,7 +30,7 @@ pipeline {
       }
     }
     stage('Install') {
-      when { allOf { branch 'master'; not { environment name: 'SKIP_CI', value: 'true' } } }
+      when { allOf { environment name: 'GIT_BRANCH', value: 'master'; not { environment name: 'SKIP_CI', value: 'true' } } }
       steps {
         parallel(
           ui: {
@@ -57,7 +54,7 @@ pipeline {
       }
     }
     stage('Build') {
-      when { allOf { branch 'master'; not { environment name: 'SKIP_CI', value: 'true' } } }
+      when { allOf { environment name: 'GIT_BRANCH', value: 'master'; not { environment name: 'SKIP_CI', value: 'true' } } }
       environment {
         LD_LIBRARY_PATH='usr/lib/x86_64-linux-gnu'
         NODE_OPTIONS='--max-old-space-size=4096'
@@ -77,7 +74,7 @@ pipeline {
       }
     }
     stage('Publish') {
-      when { allOf { branch 'master'; not { environment name: 'SKIP_CI', value: 'true' } } }
+      when { allOf { environment name: 'GIT_BRANCH', value: 'master'; not { environment name: 'SKIP_CI', value: 'true' } } }
       steps {
         withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: awsCredentialsId, accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
           sh "aws s3 cp build/site/ s3://${s3Bucket}/ --recursive --only-show-errors --acl=public-read"
@@ -86,7 +83,7 @@ pipeline {
       }
     }
     stage('Invalidate Cache') {
-      when { allOf { branch 'master'; not { environment name: 'SKIP_CI', value: 'true' } } }
+      when { allOf { environment name: 'GIT_BRANCH', value: 'master'; not { environment name: 'SKIP_CI', value: 'true' } } }
       steps {
         withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: awsCredentialsId, accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
           sh "aws --output text cloudfront create-invalidation --distribution-id ${cfDistributionId} --paths '/*'"
