@@ -11,7 +11,7 @@ pipeline {
     label 'ubuntu-14.04'
   }
   stages {
-    stage('Clone') {
+    stage('Checkout') {
       steps {
         // NOTE this job is configured such that the branch is already checked out at this stage
         //checkout scm:
