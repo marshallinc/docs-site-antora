@@ -21,7 +21,7 @@ content:
   - url: git@github.com:mulesoft/docs-data-gateway
     branches: master
   - url: git@github.com:mulesoft/docs-design-center
-    branches: v1.0
+    branches: master
   - url: git@github.com:mulesoft/docs-eu-cloud
     branches: master
   - url: git@github.com:mulesoft/docs-exchange
