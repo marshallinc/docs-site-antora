@@ -11,7 +11,7 @@ pipeline {
     stage('Promote') {
       steps {
         withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: awsCredentialsId, accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
-          sh "aws s3 sync s3://${s3FromBucket}/ s3://${s3ToBucket}/ --only-show-errors --metadata-directive=COPY"
+          sh "aws s3 sync s3://${s3FromBucket}/ s3://${s3ToBucket}/ --only-show-errors --metadata-directive COPY"
         }
       }
     }
