@@ -77,8 +77,8 @@ pipeline {
       when { allOf { environment name: 'GIT_BRANCH', value: 'master'; not { environment name: 'SKIP_CI', value: 'true' } } }
       steps {
         withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: awsCredentialsId, accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
-          sh "aws s3 sync build/site/ s3://${s3Bucket}/ --exclude='_font/*' --only-show-errors --acl=public-read --cache-control=public,max-age=0,must-revalidate"
-          sh "aws s3 sync build/site/ s3://${s3Bucket}/ --include='_font/*' --only-show-errors --acl=public-read --cache-control=public,max-age=604800 --content-type=application/font-woff"
+          sh "aws s3 sync build/site/ s3://${s3Bucket}/ --delete --acl=public-read --cache-control=public,max-age=0,must-revalidate --metadata-directive=REPLACE --only-show-errors"
+          sh "aws s3 cp build/site/_/font/ s3://${s3Bucket}/_/font/ --recursive --include '*.woff' --acl=public-read --cache-control=public,max-age=604800 --content-type=application/font-woff --metadata-directive=REPLACE --only-show-errors"
           sh "aws s3 cp etc/nginx/includes/rewrites.conf s3://${s3Bucket}/.rewrites.conf --only-show-errors"
         }
       }
