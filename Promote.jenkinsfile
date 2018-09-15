@@ -1,0 +1,26 @@
+def awsCredentialsId = 'dev-docs-jenkins-qax'
+def s3FromBucket = 'mulesoft-dev-docs-qax'
+def s3ToBucket = 'mulesoft-dev-docs-prod'
+def cfDistributionId = '...'
+
+pipeline {
+  agent {
+    label 'ubuntu-14.04'
+  }
+  stages {
+    stage('Promote') {
+      steps {
+        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: awsCredentialsId, accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+          sh "aws s3 sync s3://${s3FromBucket}/ s3://${s3ToBucket}/ --recursive --only-show-errors"
+        }
+      }
+    }
+    stage('Invalidate Cache') {
+      steps {
+        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: awsCredentialsId, accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+          sh "aws --output text cloudfront create-invalidation --distribution-id ${cfDistributionId} --paths '/*'"
+        }
+      }
+    }
+  }
+}
