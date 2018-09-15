@@ -64,7 +64,7 @@ pipeline {
           nodejs('node8') {
             script {
               try {
-                sh '$(npm bin)/antora --clean --pull --stacktrace antora-production-playbook.yml > build/build.log 2>&1'
+                sh '$(npm bin)/antora --clean --pull --stacktrace --html-url-extension-style=drop antora-production-playbook.yml > build/build.log 2>&1'
               } finally {
                 sh 'cat build/build.log'
               }
