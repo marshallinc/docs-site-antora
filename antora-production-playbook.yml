@@ -7,7 +7,7 @@ site:
 content:
   sources:
   - url: git@github.com:mulesoft/docs-access-management
-    branches: master
+    branches: latest
   - url: git@github.com:mulesoft/docs-anypoint-platform-pcf
     branches: v1.6, v1.5
   - url: git@github.com:mulesoft/docs-apikit
