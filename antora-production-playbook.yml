@@ -13,59 +13,59 @@ content:
   - url: git@github.com:mulesoft/docs-anypoint-platform-pcf
     branches: latest, v1.5
   - url: git@github.com:mulesoft/docs-apikit
-    branches: v4.x, v3.x
+    branches: latest, v3.x
   - url: git@github.com:mulesoft/docs-api-manager
     branches: latest, v1.x
   - url: git@github.com:mulesoft/docs-connector-devkit
-    branches: v3.9, v3.8, v3.7, v3.6, v3.5
+    branches: latest, v3.8, v3.7, v3.6, v3.5
   - url: git@github.com:mulesoft/docs-connectors
-    branches: master
+    branches: latest
   - url: git@github.com:mulesoft/docs-data-gateway
-    branches: master
+    branches: latest
   - url: git@github.com:mulesoft/docs-design-center
-    branches: master
+    branches: latest
   - url: git@github.com:mulesoft/docs-eu-cloud
-    branches: master
+    branches: latest
   - url: git@github.com:mulesoft/docs-exchange
-    branches: master
+    branches: latest
   - url: git@github.com:mulesoft/docs-functional-monitoring
-    branches: master
+    branches: latest
   - url: git@github.com:mulesoft/docs-general
-    branches: master
+    branches: latest
   - url: git@github.com:mulesoft/docs-healthcare-toolkit
-    branches: v3.1, v3.0, v2.0
+    branches: latest, v3.0, v2.0
   - url: git@github.com:mulesoft/docs-monitoring
-    branches: master
+    branches: latest
   - url: git@github.com:mulesoft/docs-mq
-    branches: master
+    branches: latest
   - url: git@github.com:mulesoft/docs-mule-runtime
-    branches: v3.9, v3.8, v3.7, v3.6, v3.5
+    branches: latest, v3.8, v3.7, v3.6, v3.5
   - url: git@github.com:mulesoft/docs-mule4-runtime
-    branches: v4.1
+    branches: latest
   - url: git@github.com:mulesoft/docs-mule-management-console
-    branches: v3.8
+    branches: latest
   - url: git@github.com:mulesoft/docs-mule-sdk
-    branches: v1.1, v1.0
+    branches: latest, v1.0
   - url: git@github.com:mulesoft/docs-munit
-    branches: v2.1, v2.0, v1.3
+    branches: latest, v2.0, v1.3
   - url: git@github.com:mulesoft/docs-object-store
-    branches: master
+    branches: latest
   - url: git@github.com:mulesoft/docs-partner-manager
-    branches: master
+    branches: latest
   - url: git@github.com:mulesoft/docs-private-cloud
-    branches: v2.0, v1.7, v1.6, v1.5, v1.1
+    branches: latest, v1.7, v1.6, v1.5, v1.1
   - url: git@github.com:mulesoft/docs-runtime-manager
-    branches: master
+    branches: latest
   - url: git@github.com:mulesoft/docs-runtime-fabric
-    branches: v1.0
+    branches: latest
   - url: git@github.com:mulesoft/docs-release-notes
-    branches: master
+    branches: latest
   - url: git@github.com:mulesoft/docs-studio
-    branches: v7.2, v7.1, v6.5, v6, v5
+    branches: latest, v7.1, v6.5, v6, v5
   - url: git@github.com:mulesoft/docs-tcat-server
-    branches: v7.1
+    branches: latest
   - url: git@github.com:mulesoft/docs-visualizer
-    branches: master
+    branches: latest
 ui:
   bundle:
     url: ./build/ui-bundle.zip
