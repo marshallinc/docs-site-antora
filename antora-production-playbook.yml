@@ -8,8 +8,6 @@ content:
   sources:
   - url: git@github.com:mulesoft/docs-access-management
     branches: latest
-  - url: git@github.com:mulesoft/docs-analytics
-    branches: latest
   - url: git@github.com:mulesoft/docs-anypoint-platform-pcf
     branches: latest, v1.5
   - url: git@github.com:mulesoft/docs-apikit
