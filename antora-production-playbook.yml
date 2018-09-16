@@ -38,9 +38,9 @@ content:
     branches: master
   - url: git@github.com:mulesoft/docs-mq
     branches: master
-  - url: git@github.com:mulesoft/docs-mule-runtime
+  - url: git@github.com:mulesoft/docs-mule-runtime-3
     branches: v3.9, v3.8, v3.7, v3.6, v3.5
-  - url: git@github.com:mulesoft/docs-mule4-runtime
+  - url: git@github.com:mulesoft/docs-mule-runtime-4
     branches: v4.1
   - url: git@github.com:mulesoft/docs-mule-management-console
     branches: v3.8
