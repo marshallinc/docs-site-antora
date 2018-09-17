@@ -58,14 +58,16 @@ pipeline {
       when { allOf { environment name: 'GIT_BRANCH', value: 'master'; not { environment name: 'SKIP_CI', value: 'true' } } }
       environment {
         LD_LIBRARY_PATH='usr/lib/x86_64-linux-gnu'
-        //NODE_OPTIONS='--max-old-space-size=4096'
       }
       steps {
+        dir('build/site') {
+          deleteDir()
+        }
         sshagent(['mule-docs-agent-ssh-key']) {
           nodejs('node8') {
             script {
               try {
-                sh '$(npm bin)/antora --clean --pull --stacktrace --html-url-extension-style=drop antora-production-playbook.yml > build/build.log 2>&1'
+                sh '$(npm bin)/antora --pull --stacktrace --html-url-extension-style=drop antora-production-playbook.yml > build/build.log 2>&1'
               } finally {
                 sh 'cat build/build.log'
               }
