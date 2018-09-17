@@ -58,7 +58,7 @@ pipeline {
       when { allOf { environment name: 'GIT_BRANCH', value: 'master'; not { environment name: 'SKIP_CI', value: 'true' } } }
       environment {
         LD_LIBRARY_PATH='usr/lib/x86_64-linux-gnu'
-        NODE_OPTIONS='--max-old-space-size=4096'
+        //NODE_OPTIONS='--max-old-space-size=4096'
       }
       steps {
         sshagent(['mule-docs-agent-ssh-key']) {
