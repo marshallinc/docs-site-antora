@@ -15,7 +15,7 @@ content:
   - url: git@github.com:mulesoft/docs-api-manager
     branches: latest, v1.x
   - url: git@github.com:mulesoft/docs-connector-devkit
-    branches: latest, v3.8, v3.7, v3.6, v3.5
+    branches: v3.9, v3.8, v3.7, v3.6, v3.5
   - url: git@github.com:mulesoft/docs-connectors
     branches: latest
   - url: git@github.com:mulesoft/docs-data-gateway
@@ -36,9 +36,9 @@ content:
     branches: latest
   - url: git@github.com:mulesoft/docs-mq
     branches: latest
-  - url: git@github.com:mulesoft/docs-mule-runtime
+  - url: git@github.com:mulesoft/docs-mule-runtime-3
     branches: latest, v3.8, v3.7, v3.6, v3.5
-  - url: git@github.com:mulesoft/docs-mule4-runtime
+  - url: git@github.com:mulesoft/docs-mule-runtime-4
     branches: latest
   - url: git@github.com:mulesoft/docs-mule-management-console
     branches: latest
