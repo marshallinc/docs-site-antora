@@ -30,12 +30,17 @@ pipeline {
         }
       }
     }
-    stage('Install') {
+    stage('Clean') {
       when { allOf { environment name: 'GIT_BRANCH', value: 'master'; not { environment name: 'SKIP_CI', value: 'true' } } }
       steps {
         dir('build') {
           deleteDir()
         }
+      }
+    }
+    stage('Install') {
+      when { allOf { environment name: 'GIT_BRANCH', value: 'master'; not { environment name: 'SKIP_CI', value: 'true' } } }
+      steps {
         parallel(
           ui: {
             withCredentials([string(credentialsId: githubCredentialsId, variable: 'GITHUB_TOKEN')]) {
