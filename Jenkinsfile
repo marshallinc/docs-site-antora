@@ -33,6 +33,9 @@ pipeline {
     stage('Install') {
       when { allOf { environment name: 'GIT_BRANCH', value: 'master'; not { environment name: 'SKIP_CI', value: 'true' } } }
       steps {
+        dir('build') {
+          deleteDir()
+        }
         parallel(
           ui: {
             withCredentials([string(credentialsId: githubCredentialsId, variable: 'GITHUB_TOKEN')]) {
@@ -44,12 +47,14 @@ pipeline {
           },
           node_modules: {
             nodejs('node8') {
-              sh 'yarn'
+              sh 'yarn --pure-lockfile'
             }
           },
           libs: {
-            sh 'curl -sO http://ppa.launchpad.net/ubuntu-toolchain-r/test/ubuntu/pool/main/g/gcc-8/libstdc++6_8.1.0-5ubuntu1~14.04_amd64.deb'
-            sh 'ar p libstdc++6_8.1.0-5ubuntu1~14.04_amd64.deb data.tar.xz | tar xJ'
+            dir('build') {
+              sh 'curl -sO http://ppa.launchpad.net/ubuntu-toolchain-r/test/ubuntu/pool/main/g/gcc-8/libstdc++6_8.1.0-5ubuntu1~14.04_amd64.deb'
+              sh 'ar p libstdc++6_8.1.0-5ubuntu1~14.04_amd64.deb data.tar.xz | tar xJ'
+            }
           }
         )
       }
@@ -57,12 +62,9 @@ pipeline {
     stage('Build') {
       when { allOf { environment name: 'GIT_BRANCH', value: 'master'; not { environment name: 'SKIP_CI', value: 'true' } } }
       environment {
-        LD_LIBRARY_PATH='usr/lib/x86_64-linux-gnu'
+        LD_LIBRARY_PATH='build/usr/lib/x86_64-linux-gnu'
       }
       steps {
-        dir('build/site') {
-          deleteDir()
-        }
         sshagent(['mule-docs-agent-ssh-key']) {
           nodejs('node8') {
             script {
@@ -94,11 +96,6 @@ pipeline {
           sh "aws --output text cloudfront create-invalidation --distribution-id ${cfDistributionId} --paths '/*'"
         }
       }
-    }
-  }
-  post { 
-    always { 
-      deleteDir()
     }
   }
 }
