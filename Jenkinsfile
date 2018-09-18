@@ -75,9 +75,15 @@ pipeline {
           nodejs('node8') {
             script {
               try {
-                sh '$(npm bin)/antora --pull --stacktrace --html-url-extension-style=drop antora-production-playbook.yml > build/build.log 2>&1'
+                sh '$(npm bin)/antora --pull --stacktrace --html-url-extension-style=drop --redirect-facility=nginx antora-production-playbook.yml > build/build.log 2>&1'
+                if (fileExists('build/site/.etc/nginx/rewrite.conf')) {
+                  sh 'cat etc/nginx/includes/rewrites.conf build/site/.etc/nginx/rewrite.conf > build/rewrites.conf'
+                } else {
+                  sh 'cat etc/nginx/includes/rewrites.conf > build/rewrites.conf'
+                }
               } finally {
                 sh 'cat build/build.log'
+                sh 'cat build/rewrites.conf'
               }
             }
           }
@@ -89,9 +95,9 @@ pipeline {
       steps {
         withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: awsCredentialsId, accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
           // NOTE sync won't update the metadata unless the file is transferred
-          sh "aws s3 sync build/site/ s3://${s3Bucket}/ --delete --acl public-read --cache-control 'public,max-age=0,must-revalidate' --metadata-directive REPLACE --only-show-errors"
+          sh "aws s3 sync build/site/ s3://${s3Bucket}/ --exclude '.etc/*' --delete --acl public-read --cache-control 'public,max-age=0,must-revalidate' --metadata-directive REPLACE --only-show-errors"
           sh "aws s3 cp build/site/_/font/ s3://${s3Bucket}/_/font/ --recursive --include '*.woff' --acl public-read --cache-control 'public,max-age=604800' --metadata-directive REPLACE --only-show-errors"
-          sh "aws s3 cp etc/nginx/includes/rewrites.conf s3://${s3Bucket}/.rewrites.conf --only-show-errors"
+          sh "aws s3 cp build/rewrites.conf s3://${s3Bucket}/.rewrites.conf --only-show-errors"
         }
       }
     }
