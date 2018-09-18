@@ -4,7 +4,8 @@ def gitCredentialsId = 'mule-docs-agent-ssh-key'
 def githubCredentialsId = 'mule-docs-agent-github-token'
 def awsCredentialsId = 'dev-docs-jenkins-qax'
 def s3Bucket = 'mulesoft-dev-docs-qax'
-def cfDistributionId = 'E2EXZ06TFQNQ5B'
+def cfDistributionId = 'E2EXZ06TFQNQ5B' // qax
+//def cfDistributionId = 'E16J12CGBH1F67' // stgx
 
 pipeline {
   agent {
