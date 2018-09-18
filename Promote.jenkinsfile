@@ -1,7 +1,7 @@
 def awsCredentialsId = 'dev-docs-jenkins-qax'
 def s3FromBucket = 'mulesoft-dev-docs-stgx'
 def s3ToBucket = 'mulesoft-dev-docs-prod'
-def cfDistributionId = '...'
+def cfDistributionId = 'E37QPU2IFJA9X8'
 
 pipeline {
   agent {
