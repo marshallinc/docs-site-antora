@@ -1,3 +1,5 @@
+#!groovy
+
 def awsCredentialsId = 'dev-docs-jenkins-qax'
 def s3FromBucket = 'mulesoft-dev-docs-stgx'
 def s3ToBucket = 'mulesoft-dev-docs-prod'
