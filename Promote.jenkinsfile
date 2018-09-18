@@ -1,5 +1,19 @@
 #!groovy
 
+srcEnvArray = ['qax', 'stgx']
+targetEnvArray = ['stgx', 'prod']
+
+properties([
+  parameters([
+    choice(choices: '\n' + srcEnvArray.join('\n'), description: 'Source environment', name: 'srcEnv'),
+    choice(choices: '\n' + targetEnvArray.join('\n'), description: 'Target environment', name: 'targetEnv')
+  ]),
+  pipelineTriggers([])
+])
+
+srcEnv = env.srcEnv
+targetEnv = env.targetEnv
+
 def awsCredentialsId = 'dev-docs-jenkins-qax'
 def s3FromBucket = 'mulesoft-dev-docs-stgx'
 def s3ToBucket = 'mulesoft-dev-docs-prod'
