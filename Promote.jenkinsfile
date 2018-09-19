@@ -1,5 +1,59 @@
 #!groovy
 
+/*
+Permissions taken from:
+https://blog.vizuri.com/how-to-copy/move-objects-from-one-s3-bucket-to-another-between-aws-accounts#create_iam_user
+
+Need a bucket policy in source bucket e.g. in qax to allow stgx to sync objects:
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::mulesoft-dev-docs-qax/*"
+        },
+        {
+            "Sid": "Stmt1383062239775",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::645983395287:user/dev-docs-jenkins-stgx"
+            },
+            "Action": "s3:*",
+            "Resource": [
+                "arn:aws:s3:::mulesoft-dev-docs-qax",
+                "arn:aws:s3:::mulesoft-dev-docs-qax/*"
+            ]
+        }
+    ]
+}
+
+dev-docs-jenkins-stgx needs policy:
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "s3:GetObject",
+                "s3:ListBucket",
+                "s3:GetBucketLocation",
+                "s3:ListObjects"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+                "arn:aws:s3:::mulesoft-dev-docs-qax",
+                "arn:aws:s3:::mulesoft-dev-docs-qax/*"
+            ]
+        }
+    ]
+}
+
+
+*/
+
 srcEnvArray = ['qax', 'stgx']
 targetEnvArray = ['stgx', 'prod']
 
