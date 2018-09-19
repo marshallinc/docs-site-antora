@@ -87,7 +87,6 @@ pipeline {
                 }
               } finally {
                 sh 'cat build/build.log'
-                sh 'cat build/rewrites.conf'
               }
             }
           }
