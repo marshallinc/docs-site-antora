@@ -87,7 +87,7 @@ pipeline {
       steps {
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: targetAwsCredentialsId, usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY']]) {
           sh "echo ${AWS_ACCESS_KEY_ID} | base64"
-          sh "aws s3 sync s3://${s3FromBucket}/ s3://${s3ToBucket}/ --only-show-errors --metadata-directive COPY"
+          sh "aws s3 sync s3://${s3FromBucket}/ s3://${s3ToBucket}/ --metadata-directive COPY"
         }
       }
     }
