@@ -47,6 +47,9 @@ This file needs to be picked up and moved to the location [.path]_/etc/nginx/inc
 
 == Redirect Scenarios
 
+IMPORTANT: The *Default Root Object* field in the CloudFront distribution must be left blank.
+Otherwise, CloudFront will send the browser into an infinite redirect as a result of the ngnix server redirecting back to /, and around it goes.
+
 The provided configuration covers the following scenarios, listed in the order in which they are processed.
 
 [cols="2,2,1"]
