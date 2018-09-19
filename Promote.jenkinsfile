@@ -1,5 +1,7 @@
 #!groovy
 
+import groovy.json.JsonSlurper
+
 /*
 Permissions taken from:
 https://blog.vizuri.com/how-to-copy/move-objects-from-one-s3-bucket-to-another-between-aws-accounts#create_iam_user
