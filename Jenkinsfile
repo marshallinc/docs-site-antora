@@ -3,15 +3,15 @@ def gitBranch = 'master'
 def gitCredentialsId = 'mule-docs-agent-ssh-key'
 def githubCredentialsId = 'mule-docs-agent-github-token'
 // qax
-def awsCredentialsId = 'dev-docs-jenkins-qax'
-def awsCredentials = [$class: 'AmazonWebServicesCredentialsBinding', credentialsId: awsCredentialsId, accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']
-def s3Bucket = 'mulesoft-dev-docs-qax'
-def cfDistributionId = 'E2EXZ06TFQNQ5B'
+//def awsCredentialsId = 'dev-docs-jenkins-qax'
+//def awsCredentials = [$class: 'AmazonWebServicesCredentialsBinding', credentialsId: awsCredentialsId, accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']
+//def s3Bucket = 'mulesoft-dev-docs-qax'
+//def cfDistributionId = 'E2EXZ06TFQNQ5B'
 // stgx
-//def awsCredentialsId = 'dev-docs-jenkins-stgx'
-//def awsCredentials = usernamePassword(credentialsId: awsCredentialsId, usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')
-//def s3Bucket = 'mulesoft-dev-docs-stgx'
-//def cfDistributionId = 'E16J12CGBH1F67'
+def awsCredentialsId = 'dev-docs-jenkins-stgx'
+def awsCredentials = usernamePassword(credentialsId: awsCredentialsId, usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')
+def s3Bucket = 'mulesoft-dev-docs-stgx'
+def cfDistributionId = 'E16J12CGBH1F67'
 
 pipeline {
   agent {
@@ -100,9 +100,9 @@ pipeline {
       steps {
         withCredentials([awsCredentials]) {
           // NOTE sync won't update the metadata unless the file is transferred
-          sh "aws s3 sync build/site/ s3://${s3Bucket}/ --exclude '.etc/*' --delete --acl public-read --cache-control 'public,max-age=0,must-revalidate' --metadata-directive REPLACE --only-show-errors"
+          //sh "aws s3 sync build/site/ s3://${s3Bucket}/ --exclude '.etc/*' --delete --acl public-read --cache-control 'public,max-age=0,must-revalidate' --metadata-directive REPLACE --only-show-errors"
           sh "aws s3 cp build/site/_/font/ s3://${s3Bucket}/_/font/ --recursive --include '*.woff' --acl public-read --cache-control 'public,max-age=604800' --metadata-directive REPLACE --only-show-errors"
-          sh "aws s3 cp build/rewrites.conf s3://${s3Bucket}/.rewrites.conf --only-show-errors"
+          //sh "aws s3 cp build/rewrites.conf s3://${s3Bucket}/.rewrites.conf --only-show-errors"
         }
       }
     }
