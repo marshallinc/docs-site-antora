@@ -2,10 +2,14 @@ def gitUrl = 'git@github.com:mulesoft/docs-site-antora'
 def gitBranch = 'master'
 def gitCredentialsId = 'mule-docs-agent-ssh-key'
 def githubCredentialsId = 'mule-docs-agent-github-token'
-def awsCredentialsId = 'dev-docs-jenkins-qax'
-def s3Bucket = 'mulesoft-dev-docs-qax'
-def cfDistributionId = 'E2EXZ06TFQNQ5B' // qax
-//def cfDistributionId = 'E16J12CGBH1F67' // stgx
+// qax
+//def awsCredentialsId = 'dev-docs-jenkins-qax'
+//def s3Bucket = 'mulesoft-dev-docs-qax'
+//def cfDistributionId = 'E2EXZ06TFQNQ5B'
+// stgx
+def awsCredentialsId = 'dev-docs-jenkins-stgx'
+def s3Bucket = 'mulesoft-dev-docs-stgx'
+def cfDistributionId = 'E16J12CGBH1F67'
 
 pipeline {
   agent {
