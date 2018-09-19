@@ -77,6 +77,9 @@ def targetAwsCredentialsId = 'dev-docs-jenkins-' + targetEnv
 def s3ToBucket = 'mulesoft-dev-docs-' + targetEnv
 def cfDistributionId = 'E37QPU2IFJA9X8'
 
+def jsonSlurper = new JsonSlurper()
+def cfDistMap = jsonSlurper.parseText("${CFDIST}")
+def distributions = cfDistMap['DistributionList']['Items']
 
 currentBuild.displayName = "${env.BUILD_NUMBER} - (${env.srcEnv}) -> (${env.targetEnv})"
 
@@ -95,9 +98,6 @@ pipeline {
     }
 
     stage('Invalidate Cache') {
-      def jsonSlurper = new JsonSlurper()
-      def cfDistMap = jsonSlurper.parseText("${CFDIST}")
-      def distributions = cfDistMap['DistributionList']['Items']
 
       steps {
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: targetAwsCredentialsId, accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
