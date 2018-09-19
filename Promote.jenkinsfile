@@ -95,6 +95,9 @@ pipeline {
     }
 
     stage('Invalidate Cache') {
+      def jsonSlurper = new JsonSlurper()
+      def cfDistMap = jsonSlurper.parseText("${CFDIST}")
+      def distributions = cfDistMap['DistributionList']['Items']
 
       steps {
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: targetAwsCredentialsId, accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
@@ -103,9 +106,6 @@ pipeline {
           echo "Get the cloudfront distribution id"
           CFDIST = sh (script: "${cf_listdist}", returnStdout: true).trim()
           echo "${CFDIST}"
-          def jsonSlurper = new JsonSlurper()
-          def cfDistMap = jsonSlurper.parseText("${CFDIST}")
-          def distributions = cfDistMap['DistributionList']['Items']
           //echo "${distributions}"
           //assert distributions instanceof Map
           for (i = 0; i < distributions.size() && cf_dist_id == null; i++) {
