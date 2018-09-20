@@ -113,6 +113,7 @@ pipeline {
           sh "${preview_cloudfront_cmd}"
 
           // We need to get the id of the cloudfront distribution based on the name of the domain origin
+          /*
           echo "Get the cloudfront distribution id"
           CFDIST = sh(script: "${cf_listdist}", returnStdout: true).trim()
           echo "${CFDIST}"
@@ -131,6 +132,7 @@ pipeline {
               }
             }
           }
+          */
 
           sh "aws --output text cloudfront create-invalidation --distribution-id ${cf_dist_id} --paths '/*'"
           echo "Invalidation has started"
