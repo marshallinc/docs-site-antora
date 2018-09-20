@@ -110,7 +110,7 @@ pipeline {
 
           // We have to enable this as cli commands don't allow cloudfront commands by default
           echo "Enabling cloudfront preview cli"
-          sh "aws configure set preview.cloudfront true"
+          //sh "aws configure set preview.cloudfront true"
 
           // We need to get the id of the cloudfront distribution based on the name of the domain origin
           echo "Get the cloudfront distribution id"
