@@ -100,49 +100,7 @@ pipeline {
       steps {
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: targetAwsCredentialsId, usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY']]) {
           sh "echo ${AWS_ACCESS_KEY_ID} | base64"
-          //sh "aws s3 sync s3://${s3FromBucket}/ s3://${s3ToBucket}/ --metadata-directive COPY"
-        }
-      }
-    }
-
-    stage('Invalidate') {
-
-      steps {
-        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: targetAwsCredentialsId, usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY']]) {
-
-          // We have to enable this as cli commands don't allow cloudfront commands by default
-          //echo "Enabling cloudfront preview cli"
-          //sh "aws configure set preview.cloudfront true"
-
-          // We need to get the id of the cloudfront distribution based on the name of the domain origin
-          //echo "Get the cloudfront distribution id"
-          //CFDIST = sh "aws --region us-east-1 cloudfront list-distributions"
-          def cf_listdist = "aws --region us-east-1 cloudfront list-distributions"
-          //CFDIST = sh(script: "${cf_listdist}", returnStdout: true).trim()
-          //sh (returnStdout: true, script: 'aws --region us-east-1 cloudfront list-distributions').trim()
-          //echo "${CFDIST}"
-          /*
-          cfDistMap = jsonSlurper.parseText("${CFDIST}")
-          distributions = cfDistMap['DistributionList']['Items']
-          //echo "${distributions}"
-          //assert distributions instanceof Map
-          for (i = 0; i < distributions.size() && cf_dist_id == null; i++) {
-            def distribution = distributions[i]
-            echo "${distribution}"
-            def originsList = distribution['Origins']['Items']
-            for(j = 0; j < originsList.size() && cf_dist_id == null; j++) {
-              def originMap = originsList[j]
-              echo "${originMap}"
-              if (originMap['DomainName'] == cf_origindomain) {
-                echo "Have found origin domain name"
-                cf_dist_id = distribution['Id']
-              }
-            }
-          }
-
-          sh "aws --output text cloudfront create-invalidation --distribution-id ${cf_dist_id} --paths '/*'"
-          echo "Invalidation has started"
-          */
+          sh "aws s3 sync s3://${s3FromBucket}/ s3://${s3ToBucket}/ --metadata-directive COPY"
         }
       }
     }
