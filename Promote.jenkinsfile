@@ -77,8 +77,8 @@ def targetAwsCredentialsId = 'dev-docs-jenkins-' + targetEnv
 def s3ToBucket = 'mulesoft-dev-docs-' + targetEnv
 def cfDistributionId = 'E37QPU2IFJA9X8'
 
-/*
 def jsonSlurper = new JsonSlurper()
+/*
 def CFDIST = ""
 def cfDistMap = "" 
 def distributions = "" 
