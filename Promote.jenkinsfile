@@ -135,7 +135,7 @@ node() {
 
       def cf_dist_id = null
 
-
+      echo "Set cloudfront preview"
       stage("enable cloudfront preview") {
         // We have to enable this as cli commands don't allow cloudfront commands by default
         echo "Enabling cloudfront preview cli"
