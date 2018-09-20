@@ -125,7 +125,7 @@ node() {
   withCredentials([[ $class: 'UsernamePasswordMultiBinding', credentialsId: targetAwsCredentialsId, usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY' ]]) {
     wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
 
-      echo "Start the process of invalidation"
+      echo "Start the process of invalidation for: ${targetEnv}"
       def cf_origindomain = "dev-docs-cdn.${targetEnv}.mulesoft.com"
       if(environment == "prod") {
         cf_origindomain = "dev-docs-cdn.mulesoft.com"
