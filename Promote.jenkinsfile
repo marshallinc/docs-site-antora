@@ -110,11 +110,10 @@ pipeline {
 
 
 node() {  
-  def environment = env.Environment && env.Environment in supportedEnvs ? env.Environment : ''
-  def srcDevDocs = 'dev-docs-jenkins-stgx'
   withCredentials([[ $class: 'UsernamePasswordMultiBinding', credentialsId: targetAwsCredentialsId, usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY' ]]) {
           wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
 
+      echo "Sync buckets"
       //sh "aws s3 sync s3://${s3FromBucket}/ s3://${s3ToBucket}/ --metadata-directive COPY"
         
 
