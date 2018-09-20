@@ -70,12 +70,11 @@ properties([
 srcEnv = env.srcEnv
 targetEnv = env.targetEnv
 
-def srcAwsCredentialsId = 'dev-docs-jenkins-' + srcEnv
 def s3FromBucket = 'mulesoft-dev-docs-' + srcEnv
 
 def targetAwsCredentialsId = 'dev-docs-jenkins-' + targetEnv
 def s3ToBucket = 'mulesoft-dev-docs-' + targetEnv
-def cfDistributionId = 'E37QPU2IFJA9X8'
+//def cfDistributionId = 'E37QPU2IFJA9X8'
 
 /*
 def jsonSlurper = new JsonSlurper()
@@ -91,6 +90,7 @@ def i = 0
 
 currentBuild.displayName = "${env.BUILD_NUMBER} - (${env.srcEnv}) -> (${env.targetEnv})"
 
+/*
 pipeline {
   agent {
     label 'ubuntu-14.04'
@@ -103,6 +103,84 @@ pipeline {
           sh "aws s3 sync s3://${s3FromBucket}/ s3://${s3ToBucket}/ --metadata-directive COPY"
         }
       }
+    }
+  }
+}
+*/
+
+currentBuild.displayName = "${env.Version} - (${env.Environment})"
+
+node() {  
+  def environment = env.Environment && env.Environment in supportedEnvs ? env.Environment : ''
+  def srcDevDocs = 'dev-docs-jenkins-stgx'
+  withCredentials([[ $class: 'UsernamePasswordMultiBinding', credentialsId: targetAwsCredentialsId, usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY' ]]) {
+          wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
+
+      sh "aws s3 sync s3://${s3FromBucket}/ s3://${s3ToBucket}/ --metadata-directive COPY"
+        
+
+    }          
+  }
+}
+
+node() {
+  withCredentials([[ $class: 'UsernamePasswordMultiBinding', credentialsId: targetAwsCredentialsId, usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY' ]]) {
+    wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
+
+      def cf_origindomain = "dev-docs-cdn.${targetEnv}.mulesoft.com"
+      if(environment == "prod") {
+        cf_origindomain = "dev-docs-cdn.mulesoft.com"
+      }
+      def cf_listdist = "aws --region us-east-1 cloudfront list-distributions"
+      def preview_cloudfront_cmd = "aws configure set preview.cloudfront true"
+
+      def cf_dist_id = null
+
+
+      stage("enable cloudfront preview") {
+        // We have to enable this as cli commands don't allow cloudfront commands by default
+        echo "Enabling cloudfront preview cli"
+        sh "${preview_cloudfront_cmd}"
+      }
+
+      stage("Get CloudFront distribution id") {
+        // We need to get the id of the cloudfront distribution based on the name of the domain origin
+        echo "Get the cloudfront distribution id"
+        CFDIST = sh (script: "${cf_listdist}", returnStdout: true).trim()
+        echo "${CFDIST}"
+        def jsonSlurper = new JsonSlurper()
+        def cfDistMap = jsonSlurper.parseText("${CFDIST}")
+        def distributions = cfDistMap['DistributionList']['Items']
+        //echo "${distributions}"
+        //assert distributions instanceof Map
+        for (i = 0; i < distributions.size() && cf_dist_id == null; i++) {
+          def distribution = distributions[i]
+          echo "${distribution}"
+          def originsList = distribution['Origins']['Items']
+          for(j = 0; j < originsList.size() && cf_dist_id == null; j++) {
+            def originMap = originsList[j]
+            echo "${originMap}"
+            if (originMap['DomainName'] == cf_origindomain) {
+              echo "Have found origin domain name"
+              cf_dist_id = distribution['Id']
+            }
+          }
+        }
+      }
+
+      stage('Purge cloudfront') {
+        echo "Purging cloudfront with ID ${cf_dist_id}" 
+        echo "/*"
+        def purge_cloudfront_cmd = "aws --region us-east-1 cloudfront create-invalidation --distribution-id ${cf_dist_id} --paths '/*'"
+        echo "${purge_cloudfront_cmd}"
+        sh "${purge_cloudfront_cmd}"
+        echo "Invalidation has started"
+      }
+          
+      stage('clean-up') {
+        sh "rm -rf ${artifact}*"
+      }
+
     }
   }
 }
