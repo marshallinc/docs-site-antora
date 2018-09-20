@@ -81,6 +81,9 @@ def jsonSlurper = new JsonSlurper()
 def cfDistMap = jsonSlurper.parseText("${CFDIST}")
 def distributions = cfDistMap['DistributionList']['Items']
 
+def cf_listdist = "aws --region us-east-1 cloudfront list-distributions"
+def preview_cloudfront_cmd = "aws configure set preview.cloudfront true"
+
 def CFDIST = ""
 def i = 0
 
@@ -104,6 +107,10 @@ pipeline {
 
       steps {
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: targetAwsCredentialsId, accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+
+          // We have to enable this as cli commands don't allow cloudfront commands by default
+          echo "Enabling cloudfront preview cli"
+          sh "${preview_cloudfront_cmd}"
 
           // We need to get the id of the cloudfront distribution based on the name of the domain origin
           echo "Get the cloudfront distribution id"
