@@ -62,13 +62,16 @@ targetEnvArray = ['stgx', 'prod']
 properties([
   parameters([
     choice(choices: '\n' + srcEnvArray.join('\n'), description: 'Source environment', name: 'srcEnv'),
-    choice(choices: '\n' + targetEnvArray.join('\n'), description: 'Target environment', name: 'targetEnv')
+    choice(choices: '\n' + targetEnvArray.join('\n'), description: 'Target environment', name: 'targetEnv'),
+    booleanParam(defaultValue: false, description: 'Verbose?', name: 'Verbose')
   ]),
   pipelineTriggers([])
 ])
 
 srcEnv = env.srcEnv
 targetEnv = env.targetEnv
+
+verbose = env.Verbose
 
 def s3FromBucket = 'mulesoft-dev-docs-' + srcEnv
 
@@ -96,7 +99,13 @@ node() {
           wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
 
       echo "Sync buckets"
-      sh "aws s3 sync s3://${s3FromBucket}/ s3://${s3ToBucket}/ --metadata-directive COPY"
+      if(verbose) {
+        sh "aws s3 sync s3://${s3FromBucket}/ s3://${s3ToBucket}/ --metadata-directive COPY"
+      }
+      else {
+        sh "aws s3 sync s3://${s3FromBucket}/ s3://${s3ToBucket}/ --only-show-errors --metadata-directive COPY"
+      }
+
     }          
   }
 }
