@@ -77,6 +77,7 @@ def targetAwsCredentialsId = 'dev-docs-jenkins-' + targetEnv
 def s3ToBucket = 'mulesoft-dev-docs-' + targetEnv
 def cfDistributionId = 'E37QPU2IFJA9X8'
 
+/*
 def jsonSlurper = new JsonSlurper()
 def CFDIST = ""
 def cfDistMap = "" 
@@ -86,6 +87,7 @@ def cf_listdist = "aws --region us-east-1 cloudfront list-distributions"
 def preview_cloudfront_cmd = "aws configure set preview.cloudfront true"
 
 def i = 0
+*/
 
 currentBuild.displayName = "${env.BUILD_NUMBER} - (${env.srcEnv}) -> (${env.targetEnv})"
 
