@@ -81,6 +81,9 @@ def jsonSlurper = new JsonSlurper()
 def cfDistMap = jsonSlurper.parseText("${CFDIST}")
 def distributions = cfDistMap['DistributionList']['Items']
 
+def CFDIST = ""
+def i = 0
+
 currentBuild.displayName = "${env.BUILD_NUMBER} - (${env.srcEnv}) -> (${env.targetEnv})"
 
 pipeline {
@@ -102,12 +105,10 @@ pipeline {
       steps {
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: targetAwsCredentialsId, accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
 
-          step {
-            // We need to get the id of the cloudfront distribution based on the name of the domain origin
-            echo "Get the cloudfront distribution id"
-            CFDIST = sh (script: "${cf_listdist}", returnStdout: true).trim()
-            echo "${CFDIST}"
-          }
+          // We need to get the id of the cloudfront distribution based on the name of the domain origin
+          echo "Get the cloudfront distribution id"
+          CFDIST = sh (script: "${cf_listdist}", returnStdout: true).trim()
+          echo "${CFDIST}"
           //echo "${distributions}"
           //assert distributions instanceof Map
           for (i = 0; i < distributions.size() && cf_dist_id == null; i++) {
