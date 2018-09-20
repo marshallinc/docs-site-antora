@@ -59,7 +59,7 @@ content:
   - url: git@github.com:mulesoft/docs-studio
     branches: v7.2, v7.1, v6.5, v6, v5
   - url: git@github.com:mulesoft/docs-tcat-server
-    branches: latest
+    branches: v7.1
   - url: git@github.com:mulesoft/docs-visualizer
     branches: latest
 ui:
