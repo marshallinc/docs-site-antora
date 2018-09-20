@@ -84,7 +84,7 @@ def distributions = cfDistMap['DistributionList']['Items']
 def cf_listdist = "aws --region us-east-1 cloudfront list-distributions"
 def preview_cloudfront_cmd = "aws configure set preview.cloudfront true"
 
-def CFDIST = ""
+//def CFDIST = ""
 def i = 0
 
 currentBuild.displayName = "${env.BUILD_NUMBER} - (${env.srcEnv}) -> (${env.targetEnv})"
