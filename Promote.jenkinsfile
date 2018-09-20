@@ -108,7 +108,7 @@ pipeline {
     stage('Invalidate') {
 
       steps {
-        //withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: targetAwsCredentialsId, usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: targetAwsCredentialsId, usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY']]) {
 
           // We have to enable this as cli commands don't allow cloudfront commands by default
           //echo "Enabling cloudfront preview cli"
@@ -118,7 +118,7 @@ pipeline {
           //echo "Get the cloudfront distribution id"
           //CFDIST = sh "aws --region us-east-1 cloudfront list-distributions"
           //cf_listdist = "aws --region us-east-1 cloudfront list-distributions"
-          CFDIST = sh(script: "${cf_listdist}", returnStdout: true).trim()
+          CFDIST = sh(script: "${cf_listdist}", returnStdout: true)
           //sh (returnStdout: true, script: 'aws --region us-east-1 cloudfront list-distributions').trim()
           //echo "${CFDIST}"
           /*
@@ -144,7 +144,7 @@ pipeline {
           echo "Invalidation has started"
           */
         }
-      //}
+      }
     }
   }
 }
