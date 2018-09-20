@@ -2,7 +2,7 @@ runtime:
   cache_dir: ./.cache/antora
 site:
   title: MuleSoft Documentation
-  url: https://docs-new.qax.mulesoft.com
+  url: https://docs-new.mulesoft.com
   start_page: general::index.adoc
 content:
   sources:
