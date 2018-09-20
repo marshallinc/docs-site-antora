@@ -102,10 +102,12 @@ pipeline {
       steps {
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: targetAwsCredentialsId, accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
 
-          // We need to get the id of the cloudfront distribution based on the name of the domain origin
-          echo "Get the cloudfront distribution id"
-          CFDIST = sh (script: "${cf_listdist}", returnStdout: true).trim()
-          echo "${CFDIST}"
+          step {
+            // We need to get the id of the cloudfront distribution based on the name of the domain origin
+            echo "Get the cloudfront distribution id"
+            CFDIST = sh (script: "${cf_listdist}", returnStdout: true).trim()
+            echo "${CFDIST}"
+          }
           //echo "${distributions}"
           //assert distributions instanceof Map
           for (i = 0; i < distributions.size() && cf_dist_id == null; i++) {
