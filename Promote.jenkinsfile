@@ -99,7 +99,6 @@ pipeline {
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: targetAwsCredentialsId, usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY']]) {
           sh "echo ${AWS_ACCESS_KEY_ID} | base64"
           //sh "aws s3 sync s3://${s3FromBucket}/ s3://${s3ToBucket}/ --metadata-directive COPY"
-          sh "${preview_cloudfront_cmd}"
         }
       }
     }
@@ -111,7 +110,7 @@ pipeline {
 
           // We have to enable this as cli commands don't allow cloudfront commands by default
           echo "Enabling cloudfront preview cli"
-          sh "${preview_cloudfront_cmd}"
+          sh "aws configure set preview.cloudfront true"
 
           // We need to get the id of the cloudfront distribution based on the name of the domain origin
           echo "Get the cloudfront distribution id"
