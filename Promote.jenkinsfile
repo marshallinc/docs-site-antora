@@ -127,7 +127,7 @@ node() {
 
       echo "Start the process of invalidation for: ${targetEnv}"
       def cf_origindomain = "dev-docs-cdn.${targetEnv}.mulesoft.com"
-      if(environment == "prod") {
+      if(${targetEnv} == "prod") {
         cf_origindomain = "dev-docs-cdn.mulesoft.com"
       }
       def cf_listdist = "aws --region us-east-1 cloudfront list-distributions"
