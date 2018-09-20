@@ -90,33 +90,13 @@ def i = 0
 
 currentBuild.displayName = "${env.BUILD_NUMBER} - (${env.srcEnv}) -> (${env.targetEnv})"
 
-/*
-pipeline {
-  agent {
-    label 'ubuntu-14.04'
-  }
-  stages {
-    stage('Promote') {
-      steps {
-        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: targetAwsCredentialsId, usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY']]) {
-          sh "echo ${AWS_ACCESS_KEY_ID} | base64"
-          sh "aws s3 sync s3://${s3FromBucket}/ s3://${s3ToBucket}/ --metadata-directive COPY"
-        }
-      }
-    }
-  }
-}
-*/
-
 
 node() {  
   withCredentials([[ $class: 'UsernamePasswordMultiBinding', credentialsId: targetAwsCredentialsId, usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY' ]]) {
           wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
 
       echo "Sync buckets"
-      //sh "aws s3 sync s3://${s3FromBucket}/ s3://${s3ToBucket}/ --metadata-directive COPY"
-        
-
+      sh "aws s3 sync s3://${s3FromBucket}/ s3://${s3ToBucket}/ --metadata-directive COPY"
     }          
   }
 }
@@ -174,10 +154,6 @@ node() {
         echo "${purge_cloudfront_cmd}"
         sh "${purge_cloudfront_cmd}"
         echo "Invalidation has started"
-      }
-          
-      stage('clean-up') {
-        sh "rm -rf ${artifact}*"
       }
 
     }
