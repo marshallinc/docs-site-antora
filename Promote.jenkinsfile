@@ -102,6 +102,7 @@ pipeline {
 
     stage('Invalidate Cache') {
 
+      steps {
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: targetAwsCredentialsId, accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
 
           // We need to get the id of the cloudfront distribution based on the name of the domain origin
@@ -127,6 +128,7 @@ pipeline {
           sh "aws --output text cloudfront create-invalidation --distribution-id ${cf_dist_id} --paths '/*'"
           echo "Invalidation has started"
         }
+      }
     }
   }
 }
