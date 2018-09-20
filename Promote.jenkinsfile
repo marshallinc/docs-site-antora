@@ -108,7 +108,6 @@ pipeline {
 }
 */
 
-currentBuild.displayName = "${env.Version} - (${env.Environment})"
 
 node() {  
   def environment = env.Environment && env.Environment in supportedEnvs ? env.Environment : ''
