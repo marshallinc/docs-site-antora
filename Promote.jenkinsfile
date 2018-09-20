@@ -108,7 +108,7 @@ pipeline {
     stage('Invalidate') {
 
       steps {
-        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: targetAwsCredentialsId, usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+        //withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: targetAwsCredentialsId, usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY']]) {
 
           // We have to enable this as cli commands don't allow cloudfront commands by default
           //echo "Enabling cloudfront preview cli"
@@ -144,7 +144,7 @@ pipeline {
           echo "Invalidation has started"
           */
         }
-      }
+      //}
     }
   }
 }
