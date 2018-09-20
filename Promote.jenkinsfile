@@ -116,6 +116,7 @@ pipeline {
 
           // We need to get the id of the cloudfront distribution based on the name of the domain origin
           echo "Get the cloudfront distribution id"
+          cf_listdist = "aws --region us-east-1 cloudfront list-distributions"
           //CFDIST = sh(script: "${cf_listdist}", returnStdout: true).trim()
           sh(script: "${cf_listdist}", returnStdout: true).trim()
           //echo "${CFDIST}"
