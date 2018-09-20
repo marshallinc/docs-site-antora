@@ -78,13 +78,13 @@ def s3ToBucket = 'mulesoft-dev-docs-' + targetEnv
 def cfDistributionId = 'E37QPU2IFJA9X8'
 
 def jsonSlurper = new JsonSlurper()
-def cfDistMap = jsonSlurper.parseText("${CFDIST}")
-def distributions = cfDistMap['DistributionList']['Items']
+def CFDIST = ""
+def cfDistMap = "" 
+def distributions = "" 
 
 def cf_listdist = "aws --region us-east-1 cloudfront list-distributions"
 def preview_cloudfront_cmd = "aws configure set preview.cloudfront true"
 
-//def CFDIST = ""
 def i = 0
 
 currentBuild.displayName = "${env.BUILD_NUMBER} - (${env.srcEnv}) -> (${env.targetEnv})"
@@ -117,6 +117,8 @@ pipeline {
           echo "Get the cloudfront distribution id"
           CFDIST = sh(script: "${cf_listdist}", returnStdout: true).trim()
           echo "${CFDIST}"
+          cfDistMap = jsonSlurper.parseText("${CFDIST}")
+          distributions = cfDistMap['DistributionList']['Items']
           //echo "${distributions}"
           //assert distributions instanceof Map
           for (i = 0; i < distributions.size() && cf_dist_id == null; i++) {
