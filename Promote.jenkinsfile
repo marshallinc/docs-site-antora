@@ -111,7 +111,11 @@ pipeline {
           // We have to enable this as cli commands don't allow cloudfront commands by default
           echo "Enabling cloudfront preview cli"
           sh "${preview_cloudfront_cmd}"
+        }
+      }
 
+      steps {
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: targetAwsCredentialsId, accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
           // We need to get the id of the cloudfront distribution based on the name of the domain origin
           echo "Get the cloudfront distribution id"
           CFDIST = sh(script: "${cf_listdist}", returnStdout: true).trim()
