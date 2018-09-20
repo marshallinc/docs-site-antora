@@ -116,7 +116,7 @@ pipeline {
 
           // We need to get the id of the cloudfront distribution based on the name of the domain origin
           echo "Get the cloudfront distribution id"
-          //CFDIST = sh(script: "${cf_listdist}", returnStdout: true).trim()
+          CFDIST = sh(script: "${cf_listdist}", returnStdout: true).trim()
           //echo "${CFDIST}"
           /*
           cfDistMap = jsonSlurper.parseText("${CFDIST}")
