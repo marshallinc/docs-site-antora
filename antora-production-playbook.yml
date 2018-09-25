@@ -62,6 +62,11 @@ content:
     branches: v7.1
   - url: git@github.com:mulesoft/docs-visualizer
     branches: latest
+asciidoc:
+  attributes:
+    idprefix: '@'
+    idseparator: '-@'
+    toc: ~
 ui:
   bundle:
     url: ./build/ui-bundle.zip
