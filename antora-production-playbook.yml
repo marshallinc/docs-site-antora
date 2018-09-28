@@ -39,7 +39,7 @@ content:
   - url: git@github.com:mulesoft/docs-mule-runtime
     branches: v4.1, v3.9, v3.8, v3.7, v3.6, v3.5
   - url: git@github.com:mulesoft/docs-mule-management-console
-    branches: latest
+    branches: v3.8
   - url: git@github.com:mulesoft/docs-mule-sdk
     branches: v1.1, v1.0
   - url: git@github.com:mulesoft/docs-munit
@@ -53,7 +53,7 @@ content:
   - url: git@github.com:mulesoft/docs-runtime-manager
     branches: latest
   - url: git@github.com:mulesoft/docs-runtime-fabric
-    branches: latest
+    branches: v1.0
   - url: git@github.com:mulesoft/docs-release-notes
     branches: latest
   - url: git@github.com:mulesoft/docs-studio
