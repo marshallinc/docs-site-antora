@@ -74,9 +74,11 @@ targetEnv = env.targetEnv
 verbose = env.Verbose
 
 def s3FromBucket = 'mulesoft-dev-docs-' + srcEnv
+def s3FromDLBucket = 'mulesoft-dev-docs-downloads-' + srcEnv
 
 def targetAwsCredentialsId = 'dev-docs-jenkins-' + targetEnv
 def s3ToBucket = 'mulesoft-dev-docs-' + targetEnv
+def s3ToDLBucket = 'mulesoft-dev-docs-downloads-' + targetEnv
 //def cfDistributionId = 'E37QPU2IFJA9X8'
 
 /*
@@ -100,10 +102,12 @@ node() {
 
       echo "Sync buckets"
       if(verbose) {
-        sh "aws s3 sync s3://${s3FromBucket}/ s3://${s3ToBucket}/ --metadata-directive COPY"
+        sh "aws s3 sync s3://${s3FromBucket}/ s3://${s3ToBucket}/ --metadata-directive COPY --delete"
+        sh "aws s3 sync s3://${s3FromDLBucket}/ s3://${s3ToDLBucket}/ --metadata-directive COPY --delete"
       }
       else {
-        sh "aws s3 sync s3://${s3FromBucket}/ s3://${s3ToBucket}/ --only-show-errors --metadata-directive COPY"
+        sh "aws s3 sync s3://${s3FromBucket}/ s3://${s3ToBucket}/ --only-show-errors --metadata-directive COPY --delete"
+        sh "aws s3 sync s3://${s3FromDLBucket}/ s3://${s3ToDLBucket}/ --only-show-errors --metadata-directive COPY --delete"
       }
 
     }          
