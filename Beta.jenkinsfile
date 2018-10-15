@@ -1,7 +1,7 @@
 #!groovy
 
 def gitUrl = 'git@github.com:mulesoft/docs-site-antora'
-def gitBranch = 'master'
+def gitBranch = 'DOCS-2844-add-beta-ymls'
 def gitCredentialsId = 'mule-docs-agent-ssh-key'
 def githubCredentialsId = 'mule-docs-agent-github-token'
 // qax
