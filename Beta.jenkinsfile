@@ -84,12 +84,7 @@ pipeline {
           nodejs('node8') {
             script {
               try {
-                sh '$(npm bin)/antora --pull --stacktrace --html-url-extension-style=drop --redirect-facility=nginx beta-mule-migration-tool.yml > build/build.log 2>&1'
-                if (fileExists('build/site/.etc/nginx/rewrite.conf')) {
-                  sh 'cat etc/nginx/includes/rewrites.conf build/site/.etc/nginx/rewrite.conf > build/rewrites.conf'
-                } else {
-                  sh 'cat etc/nginx/includes/rewrites.conf > build/rewrites.conf'
-                }
+                sh '$(npm bin)/antora --pull --stacktrace --html-url-extension-style=drop beta-mule-migration-tool.yml > build/build.log 2>&1'
               } finally {
                 sh 'cat build/build.log'
               }
@@ -103,10 +98,10 @@ pipeline {
       steps {
         withCredentials([awsCredentials]) {
           // NOTE sync won't update the metadata unless the file is transferred
-          sh "aws s3 sync build/site/ s3://${s3Bucket}/${betaAsset}/ --exclude '.etc/*' --delete --acl public-read --cache-control 'public,max-age=0,must-revalidate' --metadata-directive REPLACE --only-show-errors"
+          sh "aws s3 sync build/site/ s3://${s3Bucket}/ --exclude '.etc/*' --delete --acl public-read --cache-control 'public,max-age=0,must-revalidate' --metadata-directive REPLACE --only-show-errors"
           //sh "aws s3 cp build/site/ s3://${s3Bucket}/${betaAsset}/ --recursive --exclude '.etc/*' --acl public-read --cache-control 'public,max-age=0,must-revalidate' --metadata-directive REPLACE"
-          sh "aws s3 cp build/site/_/font/ s3://${s3Bucket}/${betaAsset}/_/font/ --recursive --include '*.woff' --acl public-read --cache-control 'public,max-age=604800' --metadata-directive REPLACE --only-show-errors"
-          sh "aws s3 cp build/rewrites.conf s3://${s3Bucket}/${betaAsset}/.rewrites.conf --only-show-errors"
+          sh "aws s3 cp build/site/_/font/ s3://${s3Bucket}/_/font/ --recursive --include '*.woff' --acl public-read --cache-control 'public,max-age=604800' --metadata-directive REPLACE --only-show-errors"
+          sh "aws s3 cp build/rewrites.conf s3://${s3Bucket}/.rewrites.conf --only-show-errors"
         }
       }
     }
