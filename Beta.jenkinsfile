@@ -13,7 +13,7 @@ def githubCredentialsId = 'mule-docs-agent-github-token'
 def awsCredentialsId = 'dev-docs-jenkins-stgx'
 def awsCredentials = usernamePassword(credentialsId: awsCredentialsId, usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')
 def s3Bucket = 'mulesoft-dev-docs-beta-stgx'
-def cfDistributionId = 'x'
+def cfDistributionId = 'E23PAS422IH76P'
 def betaAsset = 'beta-mule-migration-tool'
 
 pipeline {
