@@ -69,4 +69,4 @@ asciidoc:
     toc: ~
 ui:
   bundle:
-    url: ./build/ui-bundle.zip
+    url: ./../build/ui-bundle.zip
