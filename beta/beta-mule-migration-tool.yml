@@ -8,6 +8,8 @@ content:
   sources:
   - url: git@github.com:mulesoft/docs-beta
     branches: beta-mule-migration-tool
+  - url: git@github.com:mulesoft/docs-general
+    branches: latest
 asciidoc:
   attributes:
     idprefix: '@'
