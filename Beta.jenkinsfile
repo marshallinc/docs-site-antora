@@ -9,7 +9,7 @@ def githubCredentialsId = 'mule-docs-agent-github-token'
 //def awsCredentials = [$class: 'AmazonWebServicesCredentialsBinding', credentialsId: awsCredentialsId, accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']
 //def s3Bucket = 'mulesoft-dev-docs-qax'
 //def cfDistributionId = 'E2EXZ06TFQNQ5B'
-// stgx
+// beta stgx
 def awsCredentialsId = 'dev-docs-jenkins-stgx'
 def awsCredentials = usernamePassword(credentialsId: awsCredentialsId, usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')
 def s3Bucket = 'mulesoft-dev-docs-beta-stgx'
@@ -98,9 +98,9 @@ pipeline {
       steps {
         withCredentials([awsCredentials]) {
           // NOTE sync won't update the metadata unless the file is transferred
-          sh "aws s3 sync ${betaAsset} s3://${s3Bucket}/ --exclude '.etc/*' --delete --acl public-read --cache-control 'public,max-age=0,must-revalidate' --metadata-directive REPLACE --only-show-errors"
-          //sh "aws s3 cp ${betaAsset} s3://${s3Bucket}/ --recursive --exclude '.etc/*' --acl public-read --cache-control 'public,max-age=0,must-revalidate' --metadata-directive REPLACE"
-          sh "aws s3 cp ${betaAsset}_/font/ s3://${s3Bucket}/_/font/ --recursive --include '*.woff' --acl public-read --cache-control 'public,max-age=604800' --metadata-directive REPLACE --only-show-errors"
+          sh "aws s3 sync ${betaAsset}/ s3://${s3Bucket}/${betaAsset} --exclude '.etc/*' --delete --acl public-read --cache-control 'public,max-age=0,must-revalidate' --metadata-directive REPLACE --only-show-errors"
+          //sh "aws s3 cp ${betaAsset}/ s3://${s3Bucket}/${betaAsset} --recursive --exclude '.etc/*' --acl public-read --cache-control 'public,max-age=0,must-revalidate' --metadata-directive REPLACE"
+          sh "aws s3 cp ${betaAsset}/_/font/ s3://${s3Bucket}/${betaAsset}/_/font/ --recursive --include '*.woff' --acl public-read --cache-control 'public,max-age=604800' --metadata-directive REPLACE --only-show-errors"
         }
       }
     }
