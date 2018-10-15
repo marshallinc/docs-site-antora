@@ -84,7 +84,7 @@ pipeline {
           nodejs('node8') {
             script {
               try {
-                sh '$(npm bin)/antora --pull --stacktrace --html-url-extension-style=drop beta/beta-mule-migration-tool.yml > build/build.log 2>&1'
+                sh '$(npm bin)/antora --pull --stacktrace --html-url-extension-style=drop beta-mule-migration-tool.yml > build/build.log 2>&1'
               } finally {
                 sh 'cat build/build.log'
               }
