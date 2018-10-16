@@ -43,6 +43,7 @@ pipeline {
     stage('Clean') {
       when { allOf { environment name: 'GIT_BRANCH', value: 'master'; not { environment name: 'SKIP_CI', value: 'true' } } }
       steps {
+        sh 'ls'
         dir('build') {
           deleteDir()
         }
