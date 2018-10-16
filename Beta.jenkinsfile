@@ -68,6 +68,8 @@ pipeline {
               sh 'cd docs-site-antora-ui'
               sh 'npm install yarn'
               sh 'yarn'
+              sh 'ls -la'
+              sh 'pwd'
               sh 'gulp pack'
             }
           },
