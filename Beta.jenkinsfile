@@ -63,7 +63,7 @@ pipeline {
           ui: {
             sh 'git clone -b beta-ui --single-branch git@github.com:mulesoft/docs-site-antora-ui'
             sh 'file -i build/ui-bundle.zip'
-          }
+          },
           node_modules: {
             nodejs('node8') {
               sh 'yarn --pure-lockfile'
