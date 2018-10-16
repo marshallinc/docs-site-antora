@@ -69,7 +69,7 @@ pipeline {
               dir('docs-site-antora-ui') {
                 sh 'yarn --pure-lockfile'
                 sh 'pwd'
-                sh 'ls -la'
+                sh 'ls -la node_modules'
                 sh 'gulp pack'
               }
             }
