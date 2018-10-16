@@ -8,8 +8,6 @@ content:
   sources:
   - url: git@github.com:mulesoft/docs-beta
     branches: beta-mule-migration-tool
-  - url: git@github.com:mulesoft/docs-general
-    branches: latest
   - url: git@github.com:mulesoft/docs-access-management
     branches: latest
   - url: git@github.com:mulesoft/docs-anypoint-platform-pcf
