@@ -67,7 +67,7 @@ pipeline {
               sh 'echo --------------------'
               sh 'git clone -b beta-ui --single-branch git@github.com:mulesoft/docs-site-antora-ui'
               sh 'echo --------------------'
-              sh 'cd docs-site-antora-ui'
+              sh 'cd ./docs-site-antora-ui'
               sh 'pwd'
               sh 'ls -la'
               sh 'echo --------------------'
