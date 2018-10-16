@@ -67,7 +67,7 @@ pipeline {
               sh 'git clone -b beta-ui --single-branch git@github.com:mulesoft/docs-site-antora-ui'
               sh 'cd ./docs-site-antora-ui/'
               dir('docs-site-antora-ui') {
-                sh 'yarn'
+                sh 'yarn --pure-lockfile'
                 sh 'pwd'
                 sh 'ls -la'
                 sh 'gulp pack'
