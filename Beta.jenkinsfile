@@ -62,7 +62,6 @@ pipeline {
           //},
           ui: {
             sh 'git clone -b beta-ui --single-branch git@github.com:mulesoft/docs-site-antora-ui'
-            sh 'file -i build/ui-bundle.zip'
             sh 'cd docs-site-antora-ui'
             sh 'yarn; gulp pack'
             sh 'echo \'hello\''
