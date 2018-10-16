@@ -67,7 +67,7 @@ pipeline {
               sh 'cd docs-site-antora-ui'
               sh 'npm install yarn'
               sh 'yarn'
-              sh gulp 'pack'
+              sh 'gulp pack'
               sh 'echo \'hello\''
             }
           },
