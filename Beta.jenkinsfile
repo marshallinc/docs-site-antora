@@ -68,6 +68,8 @@ pipeline {
               sh 'cd ./docs-site-antora-ui/'
               dir('docs-site-antora-ui') {
                 sh 'yarn'
+                sh 'pwd'
+                sh 'ls -la'
                 sh 'gulp pack'
               }
             }
