@@ -65,11 +65,7 @@ pipeline {
             sh 'rm -Rf docs-site-antora-ui'
             nodejs('node8') {
               sh 'git clone -b beta-ui --single-branch git@github.com:mulesoft/docs-site-antora-ui'
-              sh 'pwd'
               sh 'cd ./docs-site-antora-ui/'
-              sh 'pwd'
-              sh 'ls -la'
-              sh 'npm install yarn docs-site-antora-ui/package.json'
               sh 'yarn'
               sh 'gulp pack'
             }
