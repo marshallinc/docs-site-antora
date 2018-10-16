@@ -66,8 +66,10 @@ pipeline {
             nodejs('node8') {
               sh 'git clone -b beta-ui --single-branch git@github.com:mulesoft/docs-site-antora-ui'
               sh 'cd ./docs-site-antora-ui/'
-              sh 'yarn'
-              sh 'gulp pack'
+              dir('docs-site-antora-ui') {
+                sh 'yarn'
+                sh 'gulp pack'
+              }
             }
           },
           node_modules: {
