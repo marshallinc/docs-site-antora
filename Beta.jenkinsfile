@@ -53,22 +53,22 @@ pipeline {
       when { allOf { environment name: 'GIT_BRANCH', value: 'master'; not { environment name: 'SKIP_CI', value: 'true' } } }
       steps {
         parallel(
-          //ui: {
-          //  withCredentials([string(credentialsId: githubCredentialsId, variable: 'GITHUB_TOKEN')]) {
-          //    nodejs('node8') {
-          //      sh './download-ui-bundle.sh'
-          //    }
-          //    sh 'file -i build/ui-bundle.zip'
-          //  }
-          //},
           ui: {
-            sh 'git clone -b beta-ui --single-branch git@github.com:mulesoft/docs-site-antora-ui'
-            sh 'cd docs-site-antora-ui'
-            sh 'npm install yarn'
-            sh 'yarn'
-            gulp 'pack'
-            sh 'echo \'hello\''
+            withCredentials([string(credentialsId: githubCredentialsId, variable: 'GITHUB_TOKEN')]) {
+              nodejs('node8') {
+                sh './download-ui-bundle.sh'
+              }
+              sh 'file -i build/ui-bundle.zip'
+            }
           },
+          //ui: {
+          //  sh 'git clone -b beta-ui --single-branch git@github.com:mulesoft/docs-site-antora-ui'
+          //  sh 'cd docs-site-antora-ui'
+          //  sh 'npm install yarn'
+          //  sh 'yarn'
+          //  gulp 'pack'
+          //  sh 'echo \'hello\''
+          //},
           node_modules: {
             nodejs('node8') {
               sh 'yarn --pure-lockfile'
