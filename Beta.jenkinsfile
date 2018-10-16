@@ -70,7 +70,7 @@ pipeline {
                 sh 'yarn --pure-lockfile'
                 sh 'pwd'
                 sh 'ls -la node_modules'
-                sh 'gulp pack'
+                sh './node_modules/bin/gulp.js pack'
               }
             }
           },
