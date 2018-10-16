@@ -64,7 +64,9 @@ pipeline {
           ui: {
             sh 'git clone -b beta-ui --single-branch git@github.com:mulesoft/docs-site-antora-ui'
             sh 'cd docs-site-antora-ui'
-            sh 'yarn; gulp pack'
+            sh 'npm install yarn'
+            sh 'yarn'
+            gulp 'pack'
             sh 'echo \'hello\''
           },
           node_modules: {
