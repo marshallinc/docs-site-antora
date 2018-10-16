@@ -62,13 +62,13 @@ pipeline {
           //  }
           //},
           ui: {
+            sh 'rm -Rf docs-site-antora-ui'
             nodejs('node8') {
               sh 'git clone -b beta-ui --single-branch git@github.com:mulesoft/docs-site-antora-ui'
               sh 'cd docs-site-antora-ui'
               sh 'npm install yarn'
               sh 'yarn'
               sh 'gulp pack'
-              sh 'echo \'hello\''
             }
           },
           node_modules: {
