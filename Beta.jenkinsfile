@@ -14,7 +14,7 @@ def awsCredentialsId = 'dev-docs-jenkins-stgx'
 def awsCredentials = usernamePassword(credentialsId: awsCredentialsId, usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')
 def s3Bucket = 'mulesoft-dev-docs-beta-stgx'
 def cfDistributionId = 'E23PAS422IH76P'
-def betaAsset = 'beta-mule-migration-tool'
+def betaAssets = ["beta-mule-migration-tool", "ea-AMF]
 
 pipeline {
   agent {
@@ -95,10 +95,12 @@ pipeline {
         sshagent(['mule-docs-agent-ssh-key']) {
           nodejs('node8') {
             script {
-              try {
-                sh '$(npm bin)/antora --pull --stacktrace --html-url-extension-style=drop beta-mule-migration-tool.yml > build/build.log 2>&1'
-              } finally {
-                sh 'cat build/build.log'
+              for (betaAsset in betaAssets) {
+                try {
+                  sh '$(npm bin)/antora --pull --stacktrace --html-url-extension-style=drop' + betaAsset + '.yml > build/build.log 2>&1'
+                } finally {
+                  sh 'cat build/build.log'
+                }
               }
             }
           }
@@ -110,11 +112,13 @@ pipeline {
       steps {
         withCredentials([awsCredentials]) {
           // NOTE sync won't update the metadata unless the file is transferred
-          sh "aws s3 sync build/site/ s3://${s3Bucket}/${betaAsset}/ --exclude '.etc/*' --delete --acl public-read --cache-control 'public,max-age=0,must-revalidate' --metadata-directive REPLACE --only-show-errors"
-          sh "aws s3 cp build/site/_/font/ s3://${s3Bucket}/${betaAsset}/_/font/ --recursive --include '*.woff' --acl public-read --cache-control 'public,max-age=604800' --metadata-directive REPLACE --only-show-errors"
-          sh "aws s3 cp ./beta/robots.txt s3://${s3Bucket}/${betaAsset}/ --acl public-read --cache-control 'public,max-age=604800' --metadata-directive REPLACE --only-show-errors"
-          //sh "aws s3 cp build/rewrites.conf s3://${s3Bucket}/${betaAsset}/.rewrites.conf --only-show-errors"
-          //sh "aws s3 cp build/site/ s3://${s3Bucket}/${betaAsset}/ --recursive --exclude '.etc/*' --acl public-read --cache-control 'public,max-age=0,must-revalidate' --metadata-directive REPLACE"
+          for (betaAsset in betaAssets) {
+            sh "aws s3 sync build/site/ s3://${s3Bucket}/${betaAsset}/ --exclude '.etc/*' --delete --acl public-read --cache-control 'public,max-age=0,must-revalidate' --metadata-directive REPLACE --only-show-errors"
+            sh "aws s3 cp build/site/_/font/ s3://${s3Bucket}/${betaAsset}/_/font/ --recursive --include '*.woff' --acl public-read --cache-control 'public,max-age=604800' --metadata-directive REPLACE --only-show-errors"
+            sh "aws s3 cp ./beta/robots.txt s3://${s3Bucket}/${betaAsset}/ --acl public-read --cache-control 'public,max-age=604800' --metadata-directive REPLACE --only-show-errors"
+            //sh "aws s3 cp build/rewrites.conf s3://${s3Bucket}/${betaAsset}/.rewrites.conf --only-show-errors"
+            //sh "aws s3 cp build/site/ s3://${s3Bucket}/${betaAsset}/ --recursive --exclude '.etc/*' --acl public-read --cache-control 'public,max-age=0,must-revalidate' --metadata-directive REPLACE"
+          }
         }
       }
     }
