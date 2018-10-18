@@ -14,7 +14,7 @@ def awsCredentialsId = 'dev-docs-jenkins-stgx'
 def awsCredentials = usernamePassword(credentialsId: awsCredentialsId, usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')
 def s3Bucket = 'mulesoft-dev-docs-beta-stgx'
 def cfDistributionId = 'E23PAS422IH76P'
-def betaAssets = ["beta-AMF", "beta-mule-migration-tool"]
+def betaAssets = ["beta-AMF"]
 
 pipeline {
   agent {
@@ -117,8 +117,9 @@ pipeline {
           script {
             for (betaAsset in betaAssets) {
               // NOTE sync won't update the metadata unless the file is transferred
-              sh "aws s3 sync build/site/ s3://${s3Bucket}/${betaAsset}/ --exclude '.etc/*' --delete --acl public-read --cache-control 'public,max-age=0,must-revalidate' --metadata-directive REPLACE --only-show-errors"
-              sh "aws s3 cp build/site/_/font/ s3://${s3Bucket}/${betaAsset}/_/font/ --recursive --include '*.woff' --acl public-read --cache-control 'public,max-age=604800' --metadata-directive REPLACE --only-show-errors"
+              echo "Updating: ${betaAsset}"
+              sh "aws s3 sync build/site/${betaAsset} s3://${s3Bucket}/${betaAsset}/ --exclude '.etc/*' --delete --acl public-read --cache-control 'public,max-age=0,must-revalidate' --metadata-directive REPLACE --only-show-errors"
+              sh "aws s3 cp build/site/${betaAsset}/_/font/ s3://${s3Bucket}/${betaAsset}/_/font/ --recursive --include '*.woff' --acl public-read --cache-control 'public,max-age=604800' --metadata-directive REPLACE --only-show-errors"
               sh "aws s3 cp ./beta/robots.txt s3://${s3Bucket}/${betaAsset}/ --acl public-read --cache-control 'public,max-age=604800' --metadata-directive REPLACE --only-show-errors"
               //sh "aws s3 cp build/rewrites.conf s3://${s3Bucket}/${betaAsset}/.rewrites.conf --only-show-errors"
               //sh "aws s3 cp build/site/ s3://${s3Bucket}/${betaAsset}/ --recursive --exclude '.etc/*' --acl public-read --cache-control 'public,max-age=0,must-revalidate' --metadata-directive REPLACE"
