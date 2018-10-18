@@ -98,7 +98,7 @@ pipeline {
               for (int betaAsset = 0; betaAsset < betaAssets.size(); betaAsset++) {
                 try {
                   sh 'echo $betaAsset.yml'
-                  sh '$(npm bin)/antora --pull --stacktrace --html-url-extension-style=drop $betaAsset.yml > build/build.log 2>&1'
+                  sh '$(npm bin)/antora --pull --stacktrace --html-url-extension-style=drop betaAssets[betaAsset].yml > build/build.log 2>&1'
                 } finally {
                   sh 'cat build/build.log'
                 }
