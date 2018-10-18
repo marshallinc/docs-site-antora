@@ -95,7 +95,7 @@ pipeline {
         sshagent(['mule-docs-agent-ssh-key']) {
           nodejs('node8') {
             script {
-              for (betaAsset in betaAssets) {
+              for (int betaAsset = 0; betaAsset < betaAssets.size(); betaAsset++) {
                 try {
                   sh 'echo $betaAsset.yml'
                   sh '$(npm bin)/antora --pull --stacktrace --html-url-extension-style=drop $betaAsset.yml > build/build.log 2>&1'
