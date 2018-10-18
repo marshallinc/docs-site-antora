@@ -97,7 +97,8 @@ pipeline {
             script {
               for (betaAsset in betaAssets) {
                 try {
-                  sh '$(npm bin)/antora --pull --stacktrace --html-url-extension-style=drop' + betaAsset + '.yml > build/build.log 2>&1'
+                  sh "echo ${betaAsset}"
+                  sh '$(npm bin)/antora --pull --stacktrace --html-url-extension-style=drop $(betaAsset).yml > build/build.log 2>&1'
                 } finally {
                   sh 'cat build/build.log'
                 }
