@@ -3,7 +3,7 @@ runtime:
 site:
   title: MuleSoft Beta Documentation
   url: https://beta.docs.stgx.mulesoft.com/
-  start_page: beta-vpn::vpn-about.adoc
+  start_page: general::index.adoc
 content:
   sources:
   - url: git@github.com:mulesoft/docs-beta
