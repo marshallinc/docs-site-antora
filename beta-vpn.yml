@@ -9,7 +9,7 @@ content:
   - url: git@github.com:mulesoft/docs-beta
     branches: DOCS-1981-vpn-feature
   - url: git@github.com:mulesoft/docs-general
-    branches: DOCS-2807-AMF-visible-topic-rh
+    branches: latest
 asciidoc:
   attributes:
     idprefix: '@'
