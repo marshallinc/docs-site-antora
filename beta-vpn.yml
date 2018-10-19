@@ -6,10 +6,10 @@ site:
   start_page: general::index.adoc
 content:
   sources:
-  - url: git@github.com:mulesoft/docs-beta
-    branches: DOCS-1981-vpn-feature
   - url: git@github.com:mulesoft/docs-general
     branches: latest
+  - url: git@github.com:mulesoft/docs-beta
+    branches: DOCS-1981-vpn-feature
 asciidoc:
   attributes:
     idprefix: '@'
