@@ -15,7 +15,7 @@ def awsCredentials = usernamePassword(credentialsId: awsCredentialsId, usernameV
 def s3Bucket = 'mulesoft-dev-docs-beta-stgx'
 def cfDistributionId = 'E23PAS422IH76P'
 def NODE_OPTIONS='--max-old-space-size=8192'
-def betaAssets = ["beta-AMF", "beta-vpn", "beta-mule-migration-tool"]
+def betaAssets = ["beta-AMF", "beta-vpn", "beta-mule-migration-tool", "beta-api-manager"]
 
 pipeline {
   agent {
@@ -103,7 +103,7 @@ pipeline {
                 try {
                   sh "\$(npm bin)/antora --pull --stacktrace --html-url-extension-style=drop --to-dir ./../build/site/${outputDir} beta/${betaAsset} > build/build.log 2>&1"
                   sh "ls -la build/site"
-                } 
+                }
                 finally {
                   sh 'cat build/build.log'
                 }
