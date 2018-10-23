@@ -15,7 +15,7 @@ def awsCredentials = usernamePassword(credentialsId: awsCredentialsId, usernameV
 def s3Bucket = 'mulesoft-dev-docs-beta-stgx'
 def cfDistributionId = 'E23PAS422IH76P'
 def NODE_OPTIONS='--max-old-space-size=8192'
-def betaAssets = ["beta-AMF", "beta-vpn", "beta-mule-migration-tool", "beta-api-manager"]
+def betaAssets = ["beta-api-manager", "beta-AMF", "beta-vpn", "beta-mule-migration-tool"]
 
 pipeline {
   agent {
