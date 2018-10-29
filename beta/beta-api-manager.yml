@@ -7,7 +7,7 @@ site:
 content:
   sources:
   - url: git@github.com:mulesoft/docs-api-manager
-    branches: DOCS-3085-apiproxyrtf-fm
+    branches: DOCS-3250-betareorg-fm
   - url: git@github.com:mulesoft/docs-runtime-fabric
     branches: DOCS-3085-apiproxyrtf-fm
 asciidoc:
