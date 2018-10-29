@@ -14,6 +14,7 @@ def awsCredentialsId = 'dev-docs-jenkins-stgx'
 def awsCredentials = usernamePassword(credentialsId: awsCredentialsId, usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')
 def s3Bucket = 'mulesoft-dev-docs-stgx'
 def cfDistributionId = 'E16J12CGBH1F67'
+def NODE_OPTIONS='--max-old-space-size=8192'
 
 pipeline {
   agent {
