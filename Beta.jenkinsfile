@@ -21,6 +21,9 @@ pipeline {
   agent {
     label 'ubuntu-14.04'
   }
+  triggers {
+    cron('H 1-23 * * *')
+  }  
   stages {
     stage('Checkout') {
       steps {
