@@ -110,7 +110,7 @@ pipeline {
           //sh "aws s3 cp build/site/ s3://${s3Bucket}/ --recursive --exclude '.etc/*' --acl public-read --cache-control 'public,max-age=0,must-revalidate' --metadata-directive REPLACE"
           sh "aws s3 cp build/site/_/font/ s3://${s3Bucket}/_/font/ --recursive --include '*.woff' --acl public-read --cache-control 'public,max-age=604800' --metadata-directive REPLACE --only-show-errors"
           sh "aws s3 cp build/rewrites.conf s3://${s3Bucket}/.rewrites.conf --only-show-errors"
-          sh "aws s3 cp build/legacy-wiki-rewrites.conf s3://${s3Bucket}/.legacy-wiki-rewrite.rewrites.conf --only-show-errors""
+          sh "aws s3 cp build/legacy-wiki-rewrites.conf s3://${s3Bucket}/.legacy-wiki-rewrite.rewrites.conf --only-show-errors"
         }
       }
     }
