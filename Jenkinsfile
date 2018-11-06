@@ -124,8 +124,8 @@ pipeline {
     }
   }
   post { 
-  always { 
-    deleteDir()
+    always { 
+      deleteDir()
+    }
   }
-}
 }
