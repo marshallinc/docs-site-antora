@@ -14,7 +14,6 @@ def awsCredentialsId = 'dev-docs-jenkins-stgx'
 def awsCredentials = usernamePassword(credentialsId: awsCredentialsId, usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')
 def s3Bucket = 'mulesoft-dev-docs-stgx'
 def cfDistributionId = 'E16J12CGBH1F67'
-def NODE_OPTIONS='--max-old-space-size=8192'
 
 pipeline {
   agent {
@@ -81,6 +80,7 @@ pipeline {
       when { allOf { environment name: 'GIT_BRANCH', value: 'master'; not { environment name: 'SKIP_CI', value: 'true' } } }
       environment {
         LD_LIBRARY_PATH='build/usr/lib/x86_64-linux-gnu'
+        NODE_OPTIONS='--max-old-space-size=8192'
       }
       steps {
         sshagent(['mule-docs-agent-ssh-key']) {
@@ -123,4 +123,9 @@ pipeline {
       }
     }
   }
+  post { 
+  always { 
+    deleteDir()
+  }
+}
 }
