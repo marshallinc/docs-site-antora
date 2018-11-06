@@ -80,6 +80,7 @@ pipeline {
       when { allOf { environment name: 'GIT_BRANCH', value: 'master'; not { environment name: 'SKIP_CI', value: 'true' } } }
       environment {
         LD_LIBRARY_PATH='build/usr/lib/x86_64-linux-gnu'
+        NODE_OPTIONS='--max-old-space-size=8192'
       }
       steps {
         sshagent(['mule-docs-agent-ssh-key']) {
@@ -125,6 +126,11 @@ pipeline {
           sh "aws --output text cloudfront create-invalidation --distribution-id ${cfDistributionId} --paths '/*'"
         }
       }
+    }
+  }
+  post { 
+    always { 
+      deleteDir()
     }
   }
 }
