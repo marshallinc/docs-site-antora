@@ -1,0 +1,20 @@
+runtime:
+  cache_dir: ./.cache/antora
+site:
+  title: MuleSoft Beta Documentation
+  url: https://beta.docs.stgx.mulesoft.com/
+  start_page: api-manager::index.adoc
+content:
+  sources:
+  - url: git@github.com:mulesoft/docs-studio
+    branches: [DOCS-3303]
+  - url: git@github.com:mulesoft/docs-design-center
+    branches: latest
+asciidoc:
+  attributes:
+    idprefix: '@'
+    idseparator: '-@'
+    toc: ~
+ui:
+  bundle:
+    url: ./../docs-site-antora-ui/build/ui-bundle.zip
