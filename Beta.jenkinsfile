@@ -143,4 +143,9 @@ pipeline {
       }
     }
   }
+  post { 
+    always { 
+      deleteDir()
+    }
+  }
 }
