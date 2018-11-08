@@ -87,7 +87,8 @@ pipeline {
           nodejs('node8') {
             script {
               try {
-                sh '$(npm bin)/antora --pull --stacktrace --html-url-extension-style=drop --redirect-facility=nginx antora-production-playbook.yml > build/build.log 2>&1'
+                sh '$(npm bin)/antora --pull --stacktrace --generator=./generator/xref-validator antora-production-playbook.yml'
+                sh '$(npm bin)/antora --stacktrace --html-url-extension-style=drop --redirect-facility=nginx antora-production-playbook.yml > build/build.log 2>&1'
                 if (fileExists('build/site/.etc/nginx/rewrite.conf')) {
                   sh 'cat etc/nginx/includes/rewrites.conf build/site/.etc/nginx/rewrite.conf > build/rewrites.conf'
                 } else {
