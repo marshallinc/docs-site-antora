@@ -3,7 +3,7 @@ runtime:
 site:
   title: MuleSoft Beta Documentation
   url: https://beta.docs.stgx.mulesoft.com/
-  start_page: api-manager::index.adoc
+  start_page: studio::api-sync-reference.adoc
 content:
   sources:
   - url: git@github.com:mulesoft/docs-studio
