@@ -3,7 +3,7 @@ runtime:
 site:
   title: MuleSoft Beta Documentation
   url: https://beta.docs.stgx.mulesoft.com/
-  start_page: studio::api-sync-reference.adoc
+  start_page: munit::index.adoc
 content:
   sources:
   - url: git@github.com:mulesoft/docs-munit
