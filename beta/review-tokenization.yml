@@ -1,0 +1,18 @@
+runtime:
+  cache_dir: ./.cache/antora
+site:
+  title: MuleSoft Beta Documentation
+  url: https://beta.docs.stgx.mulesoft.com/
+  start_page: anypoint-security::tokenization.adoc
+content:
+  sources:
+  - url: git@github.com:mulesoft/docs-anypoint-security
+    branches: [DOCS-2128-tokenization]
+asciidoc:
+  attributes:
+    idprefix: '@'
+    idseparator: '-@'
+    toc: ~
+ui:
+  bundle:
+    url: ./../docs-site-antora-ui/build/ui-bundle.zip
