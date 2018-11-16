@@ -8,6 +8,8 @@ content:
   sources:
   - url: git@github.com:mulesoft/docs-anypoint-security
     branches: [DOCS-2128-tokenization]
+  - url: git@github.com:mulesoft/docs-runtime-fabric
+    branches: [v1.0]
 asciidoc:
   attributes:
     idprefix: '@'
