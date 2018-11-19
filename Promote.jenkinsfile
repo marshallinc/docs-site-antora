@@ -57,7 +57,7 @@ dev-docs-jenkins-stgx needs policy:
 */
 
 srcEnvArray = ['qax', 'stgx']
-targetEnvArray = ['stgx', 'prod']
+targetEnvArray = ['qax', 'stgx', 'prod']
 
 properties([
   parameters([
